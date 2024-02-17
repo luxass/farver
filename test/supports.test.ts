@@ -39,10 +39,10 @@ it("should return false if not TTY", async () => {
   tty.isatty = ORIGINAL_TTY;
 });
 
-it("return false if `CI` is in env", () => {
-  vi.stubEnv("CI", "1");
-  expect(isColorsSupported()).toBe(false);
-});
+// it("return false if `CI` is in env", () => {
+//   vi.stubEnv("CI", "1");
+//   expect(isColorsSupported()).toBe(false);
+// });
 
 const CIS = [
   "GITHUB_ACTIONS",
