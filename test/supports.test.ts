@@ -8,7 +8,7 @@ vi.mock("node:tty", async (importOriginal) => {
   return {
     // @ts-expect-error asd
     ...actual,
-    isatty: vi.fn(() => true),
+    isatty: vi.fn(() => false),
     // your mocked methods
   };
 });
