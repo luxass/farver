@@ -60,11 +60,11 @@ export function isColorsSupported(): boolean {
     return true;
   }
 
-  if ("CI" in env && CIS.some((ci) => ci in env)) {
+  if (env.TERM !== "dumb" && (tty.isatty(1) || tty.isatty(2))) {
     return true;
   }
 
-  if (env.TERM !== "dumb" && (tty.isatty(1) || tty.isatty(2))) {
+  if ("CI" in env && CIS.some((ci) => ci in env)) {
     return true;
   }
 
