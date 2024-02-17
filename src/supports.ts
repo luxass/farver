@@ -55,19 +55,11 @@ export function isColorsSupported(): boolean {
     return true;
   }
 
-  if ("CI" in env && CIS.some((ci) => ci in env)) {
+  if (tty && tty.isatty && tty.isatty(1) && env.TERM && env.TERM !== "dumb") {
     return true;
   }
 
-  console.error({
-    tty,
-    ttyIsatty: tty.isatty,
-    ttyIsatty1: tty.isatty(1),
-    envTerm: env.TERM,
-    envTermDumb: env.TERM !== "dumb",
-  });
-
-  if (tty && tty.isatty && tty.isatty(1) && env.TERM && env.TERM !== "dumb") {
+  if ("CI" in env && CIS.some((ci) => ci in env)) {
     return true;
   }
 
