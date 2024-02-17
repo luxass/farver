@@ -31,6 +31,13 @@ export function isColorsSupported(): boolean {
     platform = "",
   } = process;
 
+  // eslint-disable-next-line no-console
+  console.log({
+    env,
+    argv,
+    platform,
+  });
+
   if ("NO_COLOR" in env || argv.includes("--no-color")) {
     return false;
   }
