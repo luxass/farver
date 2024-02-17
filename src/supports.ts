@@ -36,7 +36,7 @@ export function isColorsSupported(): boolean {
     TERM: env.TERM,
     CI: env.CI,
     KNOWN_CIS: {
-      ...Object.fromEntries(CIS.map((ci) => [ci, ci in env])),
+      ...Object.fromEntries(CIS.map((ci) => [ci, env[ci]])),
     },
     platform,
   });
@@ -67,10 +67,6 @@ export function isColorsSupported(): boolean {
   }
 
   if ("CI" in env && (CIS.some((ci) => ci in env) || env.CI_NAME === "codeship")) {
-    return true;
-  }
-
-  if ("CI" in env && CIS.some((ci) => ci in env)) {
     return true;
   }
 
