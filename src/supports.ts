@@ -68,5 +68,17 @@ export function isColorsSupported(): boolean {
     return true;
   }
 
+  if (/-256(color)?$/i.test(env.TERM!)) {
+    return true;
+  }
+
+  if (/^screen|^xterm|^vt100|color|ansi|cygwin|linux/i.test(env.TERM!)) {
+    return true;
+  }
+
+  if ("COLORTERM" in env) {
+    return true;
+  }
+
   return false;
 }
