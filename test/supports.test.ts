@@ -3,13 +3,14 @@ import tty from "node:tty";
 import { beforeEach, expect, it, vi } from "vitest";
 import { isColorsSupported } from "../src/supports";
 
+const ORIGINAL_TTY = tty.isatty;
+
 beforeEach(() => {
   Object.defineProperty(process, "platform", {
     value: "linux",
   });
   vi.unstubAllEnvs();
   process.argv = [];
-  vi.stubEnv("TERM", "xterm");
 });
 
 it("should return false if NO_COLOR is in env", () => {
@@ -32,10 +33,10 @@ it("should return true if --color is in argv", () => {
   expect(isColorsSupported()).toBe(true);
 });
 
-// eslint-disable-next-line test/no-only-tests
-it.only("should return false if not TTY", async () => {
+it("should return false if not TTY", async () => {
   tty.isatty = vi.fn(() => false);
   expect(isColorsSupported()).toBe(false);
+  tty.isatty = ORIGINAL_TTY;
 });
 
 it("return false if `CI` is in env", () => {

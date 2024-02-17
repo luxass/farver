@@ -32,12 +32,12 @@ export function isColorsSupported(): boolean {
   } = process;
 
   console.error({
-    env: env.DUMB,
     CI: env.CI,
+    ...CIS.map((ci) => ({ [ci]: env[ci] })),
     argv,
     platform,
-    tty: tty.isatty(1),
-    tty2: tty.isatty(2),
+    isatty1: tty.isatty(1),
+    isatty2: tty.isatty(2),
   });
 
   if ("NO_COLOR" in env || argv.includes("--no-color")) {
@@ -52,13 +52,17 @@ export function isColorsSupported(): boolean {
     return true;
   }
 
+  if (!tty.isatty(1) && !tty.isatty(2)) {
+    return false;
+  }
+
   if (platform === "win32" && env.TERM !== "dumb") {
     return true;
   }
 
-  if (env.TERM !== "dumb" && tty.isatty(1) && tty.isatty(2)) {
-    return true;
-  }
+  // if (env.TERM !== "dumb" && (tty.isatty(1) || tty.isatty(2))) {
+  //   return true;
+  // }
 
   if ("CI" in env && CIS.some((ci) => ci in env)) {
     return true;
