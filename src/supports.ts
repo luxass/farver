@@ -31,15 +31,6 @@ export function isColorsSupported(): boolean {
     platform = "",
   } = process;
 
-  console.error({
-    CI: env.CI,
-    ...CIS.map((ci) => ({ [ci]: env[ci] })),
-    argv,
-    platform,
-    isatty1: tty.isatty(1),
-    isatty2: tty.isatty(2),
-  });
-
   if ("NO_COLOR" in env || argv.includes("--no-color")) {
     return false;
   }
@@ -48,6 +39,7 @@ export function isColorsSupported(): boolean {
     return true;
   }
 
+  // azure devops pipelines
   if ("TF_BUILD" in env && "AGENT_NAME" in env) {
     return true;
   }
@@ -56,15 +48,23 @@ export function isColorsSupported(): boolean {
     return false;
   }
 
-  if (platform === "win32" && env.TERM !== "dumb") {
+  if (env.TERM === "dumb") {
+    return false;
+  }
+
+  if (platform === "win32") {
     return true;
   }
 
-  if (env.TERM !== "dumb" && (tty.isatty(1) || tty.isatty(2))) {
+  if ("CI" in env && (CIS.some((ci) => ci in env) || env.CI_NAME === "codeship")) {
     return true;
   }
 
   if ("CI" in env && CIS.some((ci) => ci in env)) {
+    return true;
+  }
+
+  if ("TEAMCITY_VERSION" in env) {
     return true;
   }
 
