@@ -54,7 +54,7 @@ export function isColorsSupported(): boolean {
     return true;
   }
 
-  if (!tty.isatty(1) && !tty.isatty(2)) {
+  if (!tty.isatty(1)) {
     console.error("NOT A TTY");
     return false;
   }
