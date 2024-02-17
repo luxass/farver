@@ -67,7 +67,7 @@ describe("colors", () => {
   }
 });
 
-it.only("handle numbers", () => {
+it("handle numbers", () => {
   expect(colors.green(1)).toBe(getAnsi("1", "green"));
   expect(colors.blue(0)).toBe(getAnsi("0", "blue"));
   expect(colors.magenta(-1)).toBe(getAnsi("-1", "magenta"));
