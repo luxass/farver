@@ -33,6 +33,7 @@ export function isColorsSupported(): boolean {
 
   console.error({
     env: env.DUMB,
+    CI: env.CI,
     argv,
     platform,
     tty: tty.isatty(1),
