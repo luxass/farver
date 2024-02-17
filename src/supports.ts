@@ -54,10 +54,10 @@ export function isColorsSupported(): boolean {
     return true;
   }
 
-  if (!tty.isatty(1)) {
-    console.error("NOT A TTY");
-    return false;
-  }
+  // if (!tty.isatty(1)) {
+  //   console.error("NOT A TTY");
+  //   return false;
+  // }
 
   if (env.TERM === "dumb") {
     return false;
