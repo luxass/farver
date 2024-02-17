@@ -33,8 +33,11 @@ export function isColorsSupported(): boolean {
 
   // eslint-disable-next-line no-console
   console.log({
-    env,
-    argv,
+    TERM: env.TERM,
+    CI: env.CI,
+    KNOWN_CIS: {
+      ...Object.fromEntries(CIS.map((ci) => [ci, ci in env])),
+    },
     platform,
   });
 
