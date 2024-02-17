@@ -58,6 +58,7 @@ export function isColorsSupported(): boolean {
     envTerm: env.TERM,
     envTermDumb: env.TERM !== "dumb",
   });
+
   if (tty && tty.isatty && tty.isatty(1) && env.TERM && env.TERM !== "dumb") {
     return true;
   }

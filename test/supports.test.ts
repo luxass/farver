@@ -3,16 +3,6 @@ import tty from "node:tty";
 import { beforeEach, expect, it, vi } from "vitest";
 import { isColorsSupported } from "../src/supports";
 
-vi.mock("node:tty", async (importOriginal) => {
-  const actual = await importOriginal();
-  return {
-    // @ts-expect-error asd
-    ...actual,
-    isatty: vi.fn(() => false),
-    // your mocked methods
-  };
-});
-
 beforeEach(() => {
   Object.defineProperty(process, "platform", {
     value: "linux",
