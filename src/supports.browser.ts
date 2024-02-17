@@ -1,15 +1,15 @@
 declare global {
   interface Navigator {
-    userAgentData?: NavigatorUserAgentData
+    userAgentData?: NavigatorUserAgentData;
   }
 
   interface NavigatorUserAgentData {
-    readonly brands: NavigatorUABrandVersion[]
+    readonly brands: NavigatorUABrandVersion[];
   }
 
   interface NavigatorUABrandVersion {
-    readonly brand: string
-    readonly version: string
+    readonly brand: string;
+    readonly version: string;
   }
 }
 

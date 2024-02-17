@@ -4,53 +4,53 @@ export type Farve<T = string | boolean | number | null | undefined | void> = (te
 
 interface Farver {
   // modifiers
-  reset: ChainedFarve
-  bold: ChainedFarve
-  dim: ChainedFarve
-  italic: ChainedFarve
-  underline: ChainedFarve
-  overline: ChainedFarve
-  inverse: ChainedFarve
-  hidden: ChainedFarve
-  strikethrough: ChainedFarve
+  reset: ChainedFarve;
+  bold: ChainedFarve;
+  dim: ChainedFarve;
+  italic: ChainedFarve;
+  underline: ChainedFarve;
+  overline: ChainedFarve;
+  inverse: ChainedFarve;
+  hidden: ChainedFarve;
+  strikethrough: ChainedFarve;
 
   // colors
-  black: ChainedFarve
-  red: ChainedFarve
-  green: ChainedFarve
-  yellow: ChainedFarve
-  blue: ChainedFarve
-  magenta: ChainedFarve
-  cyan: ChainedFarve
-  white: ChainedFarve
-  gray: ChainedFarve
-  blackBright: ChainedFarve
-  redBright: ChainedFarve
-  greenBright: ChainedFarve
-  yellowBright: ChainedFarve
-  blueBright: ChainedFarve
-  magentaBright: ChainedFarve
-  cyanBright: ChainedFarve
-  whiteBright: ChainedFarve
+  black: ChainedFarve;
+  red: ChainedFarve;
+  green: ChainedFarve;
+  yellow: ChainedFarve;
+  blue: ChainedFarve;
+  magenta: ChainedFarve;
+  cyan: ChainedFarve;
+  white: ChainedFarve;
+  gray: ChainedFarve;
+  blackBright: ChainedFarve;
+  redBright: ChainedFarve;
+  greenBright: ChainedFarve;
+  yellowBright: ChainedFarve;
+  blueBright: ChainedFarve;
+  magentaBright: ChainedFarve;
+  cyanBright: ChainedFarve;
+  whiteBright: ChainedFarve;
 
   // background colors
-  bgBlack: ChainedFarve
-  bgRed: ChainedFarve
-  bgGreen: ChainedFarve
-  bgYellow: ChainedFarve
-  bgBlue: ChainedFarve
-  bgMagenta: ChainedFarve
-  bgCyan: ChainedFarve
-  bgWhite: ChainedFarve
-  bgGray: ChainedFarve
-  bgBlackBright: ChainedFarve
-  bgRedBright: ChainedFarve
-  bgGreenBright: ChainedFarve
-  bgYellowBright: ChainedFarve
-  bgBlueBright: ChainedFarve
-  bgMagentaBright: ChainedFarve
-  bgCyanBright: ChainedFarve
-  bgWhiteBright: ChainedFarve
+  bgBlack: ChainedFarve;
+  bgRed: ChainedFarve;
+  bgGreen: ChainedFarve;
+  bgYellow: ChainedFarve;
+  bgBlue: ChainedFarve;
+  bgMagenta: ChainedFarve;
+  bgCyan: ChainedFarve;
+  bgWhite: ChainedFarve;
+  bgGray: ChainedFarve;
+  bgBlackBright: ChainedFarve;
+  bgRedBright: ChainedFarve;
+  bgGreenBright: ChainedFarve;
+  bgYellowBright: ChainedFarve;
+  bgBlueBright: ChainedFarve;
+  bgMagentaBright: ChainedFarve;
+  bgCyanBright: ChainedFarve;
+  bgWhiteBright: ChainedFarve;
 }
 
 export type ChainedFarve = Farve & Farver;
