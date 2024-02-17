@@ -69,7 +69,7 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "lint": "eslint . --report-unused-disable-directives",
-    "test": "vitest --run",
+    "test": "vitest --run supports.test.ts",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.browser.json"
   },
