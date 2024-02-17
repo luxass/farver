@@ -31,6 +31,14 @@ export function isColorsSupported(): boolean {
     platform = "",
   } = process;
 
+  console.error({
+    tty,
+    ttyIsatty: tty.isatty,
+    ttyIsatty1: tty.isatty(1),
+    envTerm: env.TERM,
+    envTermDumb: env.TERM !== "dumb",
+  });
+
   if ("NO_COLOR" in env || argv.includes("--no-color")) {
     return false;
   }
