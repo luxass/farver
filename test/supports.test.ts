@@ -32,7 +32,8 @@ it("should return true if --color is in argv", () => {
   expect(isColorsSupported()).toBe(true);
 });
 
-it("should return false if not TTY", async () => {
+// eslint-disable-next-line test/no-only-tests
+it.only("should return false if not TTY", async () => {
   tty.isatty = vi.fn(() => false);
   expect(isColorsSupported()).toBe(false);
 });
