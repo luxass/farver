@@ -31,6 +31,13 @@ export function isColorsSupported(): boolean {
     platform = "",
   } = process;
 
+  console.error({
+    env: env.DUMB,
+    argv,
+    platform,
+    tty: tty.isatty(1),
+  });
+
   if ("NO_COLOR" in env || argv.includes("--no-color")) {
     return false;
   }
