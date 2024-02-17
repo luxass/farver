@@ -37,6 +37,7 @@ export function isColorsSupported(): boolean {
     argv,
     platform,
     tty: tty.isatty(1),
+    tty2: tty.isatty(2),
   });
 
   if ("NO_COLOR" in env || argv.includes("--no-color")) {
