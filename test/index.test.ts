@@ -2,6 +2,7 @@ import process from "node:process";
 import { describe, expect, it } from "vitest";
 import {
   colors,
+  createColors,
 } from "../src";
 
 const logAnsi = process.env.FARVER_SHOW ? console.error : () => {};
@@ -105,4 +106,24 @@ describe("handle non strings", () => {
       expect(colors.red(input)).toBe(`${FMT.red[0]}${output}${FMT.red[1]}`);
     });
   }
+});
+
+describe("createColors", () => {
+  describe("no options provided", () => {
+    const colors = createColors();
+    for (const color in colors) {
+      it(`expect color "${color}" to have colors in output`, () => {
+        expect(colors[color as keyof typeof colors]("test")).toBe(getAnsi("test", color as keyof typeof FMT));
+      });
+    }
+  });
+
+  describe("disable colors", () => {
+    const colors = createColors(false);
+    for (const color in colors) {
+      it(`expect color "${color}" to not have colors outputted`, () => {
+        expect(colors[color as keyof typeof colors]("test")).toBe("test");
+      });
+    }
+  });
 });
