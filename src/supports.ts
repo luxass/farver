@@ -1,4 +1,3 @@
-import tty from "node:tty";
 import process from "node:process";
 
 const CIS = [
@@ -75,6 +74,7 @@ export function isColorsSupported(): boolean {
     return true;
   }
 
+  // eslint-disable-next-line regexp/no-unused-capturing-group
   if (/-256(color)?$/i.test(env.TERM!)) {
     return true;
   }
