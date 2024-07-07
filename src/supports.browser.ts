@@ -37,6 +37,7 @@ export function isColorsSupported(): boolean {
     }
   }
 
+  // eslint-disable-next-line regexp/no-unused-capturing-group
   if (/\b(Chrome|Chromium)\//.test(navigator.userAgent)) {
     return true;
   }
