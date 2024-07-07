@@ -1,11 +1,12 @@
 import process from "node:process";
 import { describe, expect, it } from "vitest";
 import {
-  colors,
   createColors,
 } from "../src";
 
 const logAnsi = process.env.FARVER_SHOW ? console.error : () => {};
+
+const COLORS_ENABLED = createColors(true);
 
 const FMT = {
   reset: ["\u001B[0m", "\u001B[0m"],
@@ -61,32 +62,32 @@ function getAnsi(text: string, ansi: keyof typeof FMT) {
 }
 
 describe("colors", () => {
-  for (const color in colors) {
+  for (const color in COLORS_ENABLED) {
     it(`expect color "${color}" to match their ansi color`, () => {
-      expect(colors[color as keyof typeof colors]("test")).toBe(getAnsi("test", color as keyof typeof FMT));
+      expect(COLORS_ENABLED[color as keyof typeof COLORS_ENABLED]("test")).toBe(getAnsi("test", color as keyof typeof FMT));
     });
   }
 });
 
 it("handle numbers", () => {
-  expect(colors.green(1)).toBe(getAnsi("1", "green"));
-  expect(colors.blue(0)).toBe(getAnsi("0", "blue"));
-  expect(colors.magenta(-1)).toBe(getAnsi("-1", "magenta"));
-  expect(colors.bgGreen(1.1)).toBe(getAnsi("1.1", "bgGreen"));
-  expect(colors.bgYellow(-1.1)).toBe(getAnsi("-1.1", "bgYellow"));
-  expect(colors.bgBlue(Number.NaN)).toBe(getAnsi("NaN", "bgBlue"));
-  expect(colors.yellow(Number.POSITIVE_INFINITY)).toBe(getAnsi("Infinity", "yellow"));
-  expect(colors.red(Number.NEGATIVE_INFINITY)).toBe(getAnsi("-Infinity", "red"));
+  expect(COLORS_ENABLED.green(1)).toBe(getAnsi("1", "green"));
+  expect(COLORS_ENABLED.blue(0)).toBe(getAnsi("0", "blue"));
+  expect(COLORS_ENABLED.magenta(-1)).toBe(getAnsi("-1", "magenta"));
+  expect(COLORS_ENABLED.bgGreen(1.1)).toBe(getAnsi("1.1", "bgGreen"));
+  expect(COLORS_ENABLED.bgYellow(-1.1)).toBe(getAnsi("-1.1", "bgYellow"));
+  expect(COLORS_ENABLED.bgBlue(Number.NaN)).toBe(getAnsi("NaN", "bgBlue"));
+  expect(COLORS_ENABLED.yellow(Number.POSITIVE_INFINITY)).toBe(getAnsi("Infinity", "yellow"));
+  expect(COLORS_ENABLED.red(Number.NEGATIVE_INFINITY)).toBe(getAnsi("-Infinity", "red"));
 });
 
 it("handle nullish values", () => {
-  expect(colors.bgGreen(undefined)).toBe(`${FMT.bgGreen[0]}undefined${FMT.bgGreen[1]}`);
-  expect(colors.bgBlue(null)).toBe(`${FMT.bgBlue[0]}null${FMT.bgBlue[1]}`);
+  expect(COLORS_ENABLED.bgGreen(undefined)).toBe(`${FMT.bgGreen[0]}undefined${FMT.bgGreen[1]}`);
+  expect(COLORS_ENABLED.bgBlue(null)).toBe(`${FMT.bgBlue[0]}null${FMT.bgBlue[1]}`);
 });
 
 it("handle booleans", () => {
-  expect(colors.red(true)).toBe(getAnsi("true", "red"));
-  expect(colors.red(false)).toBe(getAnsi("false", "red"));
+  expect(COLORS_ENABLED.red(true)).toBe(getAnsi("true", "red"));
+  expect(COLORS_ENABLED.red(false)).toBe(getAnsi("false", "red"));
 });
 
 describe("handle non strings", () => {
@@ -102,22 +103,13 @@ describe("handle non strings", () => {
 
   for (const [input, output] of cases) {
     it(`expect ${input} to be ${output}`, () => {
-      logAnsi(colors.red(input), `${FMT.red[0]}${output}${FMT.red[1]}`);
-      expect(colors.red(input)).toBe(`${FMT.red[0]}${output}${FMT.red[1]}`);
+      logAnsi(COLORS_ENABLED.red(input), `${FMT.red[0]}${output}${FMT.red[1]}`);
+      expect(COLORS_ENABLED.red(input)).toBe(`${FMT.red[0]}${output}${FMT.red[1]}`);
     });
   }
 });
 
 describe("createColors", () => {
-  describe("no options provided", () => {
-    const colors = createColors();
-    for (const color in colors) {
-      it(`expect color "${color}" to have colors in output`, () => {
-        expect(colors[color as keyof typeof colors]("test")).toBe(getAnsi("test", color as keyof typeof FMT));
-      });
-    }
-  });
-
   describe("disable colors", () => {
     const colors = createColors(false);
     for (const color in colors) {
