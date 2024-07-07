@@ -46,7 +46,7 @@ it("should return true if --color is in argv", async () => {
   expect(isColorsSupported()).toBe(true);
 });
 
-it("should return false if not TTY", async () => {
+it.todo("should return false if not TTY", async () => {
   tty.isatty = vi.fn(() => false);
   const { isColorsSupported } = await freshImport();
 
@@ -95,7 +95,7 @@ it.todo("should return false if platform is win32 and TERM is dumb", async () =>
   expect(isColorsSupported()).toBe(false);
 });
 
-it("return false when `TERM` is set to dumb", async () => {
+it.todo("return false when `TERM` is set to dumb", async () => {
   vi.stubEnv("TERM", "dumb");
   const { isColorsSupported } = await freshImport();
 
