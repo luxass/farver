@@ -10,7 +10,6 @@ export default defineConfig([
     platform: "node",
     target: "es2022",
     dts: true,
-    // treeshake: true,
     bundle: true,
     clean: true,
     outExtension(ctx) {

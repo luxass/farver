@@ -73,6 +73,9 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.browser.json"
   },
+  "dependencies": {
+    "termenv": "^0.1.1"
+  },
   "devDependencies": {
     "@luxass/eslint-config": "^4.8.0",
     "@types/node": "^18.19.39",
