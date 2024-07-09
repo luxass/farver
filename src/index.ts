@@ -176,6 +176,57 @@ const {
   bgWhiteBright,
 } = colors;
 
+export const foregroundColors = {
+  black,
+  red,
+  green,
+  yellow,
+  blue,
+  magenta,
+  cyan,
+  white,
+  gray,
+  blackBright,
+  redBright,
+  greenBright,
+  yellowBright,
+  blueBright,
+  magentaBright,
+  cyanBright,
+  whiteBright,
+};
+
+export const backgroundColors = {
+  bgBlack,
+  bgRed,
+  bgGreen,
+  bgYellow,
+  bgBlue,
+  bgMagenta,
+  bgCyan,
+  bgWhite,
+  bgGray,
+  bgRedBright,
+  bgGreenBright,
+  bgYellowBright,
+  bgBlueBright,
+  bgMagentaBright,
+  bgCyanBright,
+  bgWhiteBright,
+};
+
+export const utilities = {
+  reset,
+  bold,
+  dim,
+  italic,
+  underline,
+  inverse,
+  hidden,
+  strikethrough,
+};
+
+// all colors
 export {
   reset,
   bold,
