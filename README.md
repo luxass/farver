@@ -1,5 +1,8 @@
 # 🎨 farver
 
+[![npm version][npm-version-src]][npm-version-href]
+[![npm downloads][npm-downloads-src]][npm-downloads-href]
+
 ## 📦 Installation
 
 ```sh
@@ -19,3 +22,10 @@ console.log(colors.red.bgYellow("Hello world!"));
 ## 📄 License
 
 Published under [MIT License](./LICENSE).
+
+<!-- Badges -->
+
+[npm-version-src]: https://img.shields.io/npm/v/farver?style=flat&colorA=18181B&colorB=4169E1
+[npm-version-href]: https://npmjs.com/package/farver
+[npm-downloads-src]: https://img.shields.io/npm/dm/farver?style=flat&colorA=18181B&colorB=4169E1
+[npm-downloads-href]: https://npmjs.com/package/farver
