@@ -1,4 +1,4 @@
-import { isColorsSupported } from "#supports";
+import { isColorsSupported } from "./supports";
 
 const isColorSupported = isColorsSupported();
 
