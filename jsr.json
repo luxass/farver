@@ -12,6 +12,7 @@
     ".github/**",
     "scripts/**",
     "test/**",
-    "tsconfig.json"
+    "tsconfig.json",
+    "playground.ts"
   ]
 }
