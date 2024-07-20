@@ -4,7 +4,6 @@
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![jsr version][jsr-version-src]][jsr-version-href]
 
-
 ## 📦 Installation
 
 ```sh
