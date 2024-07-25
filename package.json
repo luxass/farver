@@ -34,28 +34,22 @@
     ".": {
       "import": {
         "types": "./dist/index.d.ts",
-        "browser": "./dist/browser/index.mjs",
         "default": "./dist/index.mjs"
       },
       "require": {
         "types": "./dist/index.d.cts",
-        "browser": "./dist/browser/index.cjs",
         "default": "./dist/index.cjs"
-      },
-      "browser": "./dist/browser/index.mjs"
+      }
     },
     "./supports": {
       "import": {
         "types": "./dist/supports.d.ts",
-        "browser": "./dist/browser/supports.browser.mjs",
         "default": "./dist/supports.mjs"
       },
       "require": {
         "types": "./dist/supports.d.cts",
-        "browser": "./dist/browser/supports.browser.cjs",
         "default": "./dist/supports.cjs"
-      },
-      "browser": "./dist/browser/supports.browser.mjs"
+      }
     },
     "./package.json": "./package.json"
   },
@@ -68,22 +62,21 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "lint": "eslint . --report-unused-disable-directives",
+    "lint": "eslint .",
     "test": "vitest --run",
     "test:watch": "vitest",
-    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.browser.json"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "termenv": "^0.1.1"
+    "termenv": "^0.3.1"
   },
   "devDependencies": {
-    "@luxass/eslint-config": "^4.8.3",
+    "@luxass/eslint-config": "^4.9.0",
     "@types/node": "^18.19.39",
-    "eslint": "^9.6.0",
+    "eslint": "^9.7.0",
     "eslint-plugin-format": "^0.1.2",
-    "jsdom": "^24.1.0",
-    "tsup": "^8.1.0",
+    "tsup": "^8.2.1",
     "typescript": "^5.5.3",
-    "vitest": "^2.0.1"
+    "vitest": "^2.0.3"
   }
 }

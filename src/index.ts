@@ -1,4 +1,4 @@
-import { isColorsSupported } from "#supports";
+import { isColorsSupported } from "./supports";
 
 const isColorSupported = isColorsSupported();
 
@@ -118,7 +118,7 @@ export function createColors(enabled: boolean = isColorSupported): Farver {
   };
 }
 
-export const colors = createColors();
+export const colors: Farver = createColors();
 
 function chain(farve: Farve): Farve {
   return new Proxy(farve, {
