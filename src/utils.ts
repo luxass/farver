@@ -1,4 +1,18 @@
 /**
+ * @module utils
+ *
+ * A collection of utility functions for working with colors.
+ *
+ * @example
+ * ```ts
+ * import { hexToRgb } from "farver/utils";
+ *
+ * console.log(hexToRgb("#FF0000")); // Outputs: [255, 0, 0]
+ * console.log(hexToRgb("#FFF"));    // Outputs: [255, 255, 255]
+ * ```
+ */
+
+/**
  * Transforms a hexadecimal color code into its RGB components.
  *
  * This function accepts hexadecimal color codes that are either 3 or 6 characters long, with an optional leading "#".
