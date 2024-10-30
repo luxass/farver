@@ -18,13 +18,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4.2.2
 
       - name: setup pnpm
         uses: pnpm/action-setup@v4.0.0
 
       - name: setup node
-        uses: actions/setup-node@v4.0.4
+        uses: actions/setup-node@v4.1.0
         with:
           node-version: lts/*
 
@@ -54,13 +54,13 @@ jobs:
 
     steps:
       - name: checkout
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4.2.2
 
       - name: setup pnpm
         uses: pnpm/action-setup@v4.0.0
 
       - name: setup node v${{ matrix.node }}
-        uses: actions/setup-node@v4.0.4
+        uses: actions/setup-node@v4.1.0
         with:
           node-version: ${{ matrix.node }}
 
