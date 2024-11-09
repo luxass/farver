@@ -1,6 +1,5 @@
 import {
   blue,
-  red,
   yellow,
 } from "./src";
 
