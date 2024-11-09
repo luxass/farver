@@ -1,6 +1,6 @@
 {
   "name": "farver",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A tiny color library",
   "type": "module",
   "author": {
@@ -8,7 +8,7 @@
     "email": "lucasnrgaard@gmail.com",
     "url": "https://luxass.dev"
   },
-  "packageManager": "pnpm@9.5.0",
+  "packageManager": "pnpm@9.12.3",
   "license": "MIT",
   "homepage": "https://github.com/luxass/farver",
   "repository": {
@@ -78,15 +78,15 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "termenv": "^0.3.1"
+    "termenv": "^0.4.0"
   },
   "devDependencies": {
-    "@luxass/eslint-config": "^4.9.0",
-    "@types/node": "^18.19.39",
-    "eslint": "^9.7.0",
+    "@luxass/eslint-config": "^4.12.1",
+    "@types/node": "^18.19.63",
+    "eslint": "^9.14.0",
     "eslint-plugin-format": "^0.1.2",
-    "tsup": "^8.2.1",
-    "typescript": "^5.5.3",
-    "vitest": "^2.0.3"
+    "tsup": "^8.3.5",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4"
   }
 }

@@ -1,5 +1,6 @@
 import {
-  red,
+  blue,
+  yellow,
 } from "./src";
 
-console.log(red("hello, world!"));
+console.log(`${blue("hello")}, ${yellow("world")}!`);
