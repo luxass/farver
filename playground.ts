@@ -1,4 +1,4 @@
-import {
+import farver, {
   blue,
   cyan,
   green,
@@ -11,6 +11,10 @@ import {
   yellow,
   yellowBright,
 } from "./src";
+
+console.log(`\n${inverse(" RGB: ")} \n`);
+console.log(farver.rgb(13, 42, 79)("red"));
+console.log(farver.bgRgb(79, 13, 42).rgb(13, 42, 79)("red on blue"));
 
 console.log(`\n${inverse(" Newlines: ")} \n`);
 console.log(red.bgWhite("FIRST LINE \nSECOND LINE\nTHIRD LINE "));

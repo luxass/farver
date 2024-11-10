@@ -53,12 +53,16 @@ interface Farver {
   bgMagentaBright: ChainedFarve;
   bgCyanBright: ChainedFarve;
   bgWhiteBright: ChainedFarve;
+
+  // true color
+  rgb: (r: number, g: number, b: number) => ChainedFarve;
+  bgRgb: (r: number, g: number, b: number) => ChainedFarve;
 }
 
 export type ChainedFarve = Farve & Farver;
 
 function createWrap(enabled: boolean) {
-  return function wrap(start: number, end: number): ChainedFarve {
+  return function wrap(start: number | string, end: number | string): ChainedFarve {
     if (!enabled) {
       return chain((text) => text) as ChainedFarve;
     }
@@ -130,6 +134,10 @@ export function createColors(enabled: boolean = isColorSupported): Farver {
     bgMagentaBright: wrap(105, 49),
     bgCyanBright: wrap(106, 49),
     bgWhiteBright: wrap(107, 49),
+
+    rgb: (r: number, g: number, b: number) => wrap(`38;2;${r};${g};${b}`, 39),
+    bgRgb: (r: number, g: number, b: number) => wrap(`48;2;${r};${g};${b}`, 49),
+
   };
 }
 
@@ -141,7 +149,13 @@ function chain(farve: Farve): Farve {
   return new Proxy(farve, {
     get(target, prop) {
       if (prop in colors) {
-        return chain((text) => farve(colors[prop as keyof Farver](text)));
+        const value = colors[prop as keyof Farver];
+
+        if (prop === "rgb" || prop === "bgRgb") {
+          return (...args: number[]) => chain((text) => value(...args)(text));
+        }
+
+        return chain((text) => farve(value(text)));
       }
       return target[prop as keyof Farve];
     },
