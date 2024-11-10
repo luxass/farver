@@ -1,4 +1,5 @@
 import { isColorsSupported } from "./supports";
+import { hexToRgb } from "./utils";
 
 const isColorSupported = isColorsSupported();
 
@@ -57,6 +58,10 @@ interface Farver {
   // true color
   rgb: (r: number, g: number, b: number) => ChainedFarve;
   bgRgb: (r: number, g: number, b: number) => ChainedFarve;
+  fg: (code: number) => ChainedFarve;
+  bg: (code: number) => ChainedFarve;
+  hex: (hex: string) => ChainedFarve;
+  bgHex: (hex: string) => ChainedFarve;
 }
 
 export type ChainedFarve = Farve & Farver;
@@ -137,7 +142,10 @@ export function createColors(enabled: boolean = isColorSupported): Farver {
 
     rgb: (r: number, g: number, b: number) => wrap(`38;2;${r};${g};${b}`, 39),
     bgRgb: (r: number, g: number, b: number) => wrap(`48;2;${r};${g};${b}`, 49),
-
+    fg: (code: number) => wrap(`38;5;${code}`, 39),
+    bg: (code: number) => wrap(`48;5;${code}`, 49),
+    hex: (hex: string) => wrap(`38;2;${hexToRgb(hex).join(";")}`, 39),
+    bgHex: (hex: string) => wrap(`48;2;${hexToRgb(hex).join(";")}`, 49),
   };
 }
 
@@ -151,12 +159,16 @@ function chain(farve: Farve): Farve {
       if (prop in colors) {
         const value = colors[prop as keyof Farver];
 
-        if (prop === "rgb" || prop === "bgRgb") {
-          return (...args: number[]) => chain((text) => value(...args)(text));
+        if (prop === "rgb" || prop === "bgRgb" || prop === "fg" || prop === "bg" || prop === "hex" || prop === "bgHex") {
+          return (...args: number[]) => chain((text) => {
+            const currentText = farve(text);
+            return value(...args)(currentText);
+          });
         }
 
         return chain((text) => farve(value(text)));
       }
+
       return target[prop as keyof Farve];
     },
   });
