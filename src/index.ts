@@ -67,6 +67,11 @@ function createWrap(enabled: boolean) {
         text = `${text}`;
       }
 
+      if (text.includes("\x1B")) {
+        const search = `\u001B[${end}m`;
+        text = text.replaceAll(search, `\u001B[${start}m`);
+      }
+
       if (text.includes("\n")) {
         text = text.replace(/(\r?\n)/g, `\u001B[${end}m$1\u001B[${start}m`);
       }
