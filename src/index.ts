@@ -120,11 +120,12 @@ export function createColors(enabled: boolean = isColorSupported): Farver {
 
 export const colors: Farver = createColors();
 
+export default colors;
+
 function chain(farve: Farve): Farve {
   return new Proxy(farve, {
     get(target, prop) {
       if (prop in colors) {
-        // TODO: Remove these type casts
         return chain((text) => farve(colors[prop as keyof Farver](text)));
       }
       return target[prop as keyof Farve];
