@@ -62,7 +62,17 @@ function createWrap(enabled: boolean) {
     if (!enabled) {
       return chain((text) => text) as ChainedFarve;
     }
-    return chain((text) => `\u001B[${start}m${text}\u001B[${end}m`) as ChainedFarve;
+    return chain((text) => {
+      if (typeof text !== "string") {
+        text = `${text}`;
+      }
+
+      if (text.includes("\n")) {
+        text = text.replace(/(\r?\n)/g, `\u001B[${end}m$1\u001B[${start}m`);
+      }
+
+      return `\u001B[${start}m${text}\u001B[${end}m`;
+    }) as ChainedFarve;
   };
 }
 
