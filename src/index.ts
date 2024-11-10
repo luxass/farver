@@ -62,7 +62,22 @@ function createWrap(enabled: boolean) {
     if (!enabled) {
       return chain((text) => text) as ChainedFarve;
     }
-    return chain((text) => `\u001B[${start}m${text}\u001B[${end}m`) as ChainedFarve;
+    return chain((text) => {
+      if (typeof text !== "string") {
+        text = `${text}`;
+      }
+
+      if (text.includes("\x1B")) {
+        const search = `\u001B[${end}m`;
+        text = text.replaceAll(search, `\u001B[${start}m`);
+      }
+
+      if (text.includes("\n")) {
+        text = text.replace(/(\r?\n)/g, `\u001B[${end}m$1\u001B[${start}m`);
+      }
+
+      return `\u001B[${start}m${text}\u001B[${end}m`;
+    }) as ChainedFarve;
   };
 }
 
@@ -120,11 +135,12 @@ export function createColors(enabled: boolean = isColorSupported): Farver {
 
 export const colors: Farver = createColors();
 
+export default colors;
+
 function chain(farve: Farve): Farve {
   return new Proxy(farve, {
     get(target, prop) {
       if (prop in colors) {
-        // TODO: Remove these type casts
         return chain((text) => farve(colors[prop as keyof Farver](text)));
       }
       return target[prop as keyof Farve];
