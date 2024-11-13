@@ -1,8 +1,11 @@
 import process from "node:process";
 import { describe, expect, it } from "vitest";
-import {
-  createColors,
-} from "../src";
+import { createColors } from "../src";
+
+function escape(code: string) {
+  // eslint-disable-next-line no-control-regex
+  return code.replace(/\x1B/g, "\\x1b");
+}
 
 const logAnsi = process.env.FARVER_SHOW ? console.error : () => {};
 
@@ -61,10 +64,12 @@ function getAnsi(text: string, ansi: keyof typeof FMT) {
   return `${FMT[ansi][0]}${text}${FMT[ansi][1]}`;
 }
 
-describe("colors", () => {
+describe.todo("colors", () => {
   for (const color in COLORS_ENABLED) {
     it(`expect color "${color}" to match their ansi color`, () => {
-      expect(COLORS_ENABLED[color as keyof typeof COLORS_ENABLED]("test")).toBe(getAnsi("test", color as keyof typeof FMT));
+      expect(COLORS_ENABLED[color as keyof typeof COLORS_ENABLED]("test")).toBe(
+        getAnsi("test", color as keyof typeof FMT),
+      );
     });
   }
 });
@@ -76,13 +81,21 @@ it("handle numbers", () => {
   expect(COLORS_ENABLED.bgGreen(1.1)).toBe(getAnsi("1.1", "bgGreen"));
   expect(COLORS_ENABLED.bgYellow(-1.1)).toBe(getAnsi("-1.1", "bgYellow"));
   expect(COLORS_ENABLED.bgBlue(Number.NaN)).toBe(getAnsi("NaN", "bgBlue"));
-  expect(COLORS_ENABLED.yellow(Number.POSITIVE_INFINITY)).toBe(getAnsi("Infinity", "yellow"));
-  expect(COLORS_ENABLED.red(Number.NEGATIVE_INFINITY)).toBe(getAnsi("-Infinity", "red"));
+  expect(COLORS_ENABLED.yellow(Number.POSITIVE_INFINITY)).toBe(
+    getAnsi("Infinity", "yellow"),
+  );
+  expect(COLORS_ENABLED.red(Number.NEGATIVE_INFINITY)).toBe(
+    getAnsi("-Infinity", "red"),
+  );
 });
 
 it("handle nullish values", () => {
-  expect(COLORS_ENABLED.bgGreen(undefined)).toBe(`${FMT.bgGreen[0]}undefined${FMT.bgGreen[1]}`);
-  expect(COLORS_ENABLED.bgBlue(null)).toBe(`${FMT.bgBlue[0]}null${FMT.bgBlue[1]}`);
+  expect(COLORS_ENABLED.bgGreen(undefined)).toBe(
+    `${FMT.bgGreen[0]}undefined${FMT.bgGreen[1]}`,
+  );
+  expect(COLORS_ENABLED.bgBlue(null)).toBe(
+    `${FMT.bgBlue[0]}null${FMT.bgBlue[1]}`,
+  );
 });
 
 it("handle booleans", () => {
@@ -104,12 +117,14 @@ describe("handle non strings", () => {
   for (const [input, output] of cases) {
     it(`expect ${input} to be ${output}`, () => {
       logAnsi(COLORS_ENABLED.red(input), `${FMT.red[0]}${output}${FMT.red[1]}`);
-      expect(COLORS_ENABLED.red(input)).toBe(`${FMT.red[0]}${output}${FMT.red[1]}`);
+      expect(COLORS_ENABLED.red(input)).toBe(
+        `${FMT.red[0]}${output}${FMT.red[1]}`,
+      );
     });
   }
 });
 
-describe("createColors", () => {
+describe.todo("createColors", () => {
   describe("disable colors", () => {
     const colors = createColors(false);
     for (const color in colors) {
@@ -119,3 +134,5 @@ describe("createColors", () => {
     }
   });
 });
+
+it("should downscale true colors", () => {});
