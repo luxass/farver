@@ -216,6 +216,14 @@ const {
   bgMagentaBright,
   bgCyanBright,
   bgWhiteBright,
+  bgBlackBright,
+  hex,
+  bg,
+  bgHex,
+  bgRgb,
+  fg,
+  overline,
+  rgb,
 } = colors;
 
 export const foregroundColors = {
@@ -255,6 +263,7 @@ export const backgroundColors = {
   bgMagentaBright,
   bgCyanBright,
   bgWhiteBright,
+  bgBlackBright,
 };
 
 export const utilities = {
@@ -265,12 +274,15 @@ export const utilities = {
   underline,
   inverse,
   hidden,
+  overline,
   strikethrough,
 };
 
 // all colors
 export {
+  bg,
   bgBlack,
+  bgBlackBright,
   bgBlue,
   bgBlueBright,
   bgCyan,
@@ -278,10 +290,12 @@ export {
   bgGray,
   bgGreen,
   bgGreenBright,
+  bgHex,
   bgMagenta,
   bgMagentaBright,
   bgRed,
   bgRedBright,
+  bgRgb,
   bgWhite,
   bgWhiteBright,
   bgYellow,
@@ -294,17 +308,22 @@ export {
   cyan,
   cyanBright,
   dim,
+  fg,
   gray,
   green,
   greenBright,
+  hex,
   hidden,
   inverse,
   italic,
   magenta,
   magentaBright,
+  overline,
   red,
   redBright,
   reset,
+
+  rgb,
   strikethrough,
   underline,
   white,
