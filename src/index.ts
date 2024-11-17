@@ -1,8 +1,5 @@
-import { getColorSpace } from "./supports";
+import { type ColorSpace, getColorSpace } from "./supports";
 import { ansi256To16, hexToRgb, rgbToAnsi16, rgbToAnsi256 } from "./utils";
-
-const colorSpace = getColorSpace();
-const isColorSupported = colorSpace > 0;
 
 export type Farve<T = string | boolean | number | null | undefined | void> = (text: T) => T;
 
@@ -91,14 +88,13 @@ function createWrap(enabled: boolean) {
   };
 }
 
-export function createColors(enabled: boolean = isColorSupported): Farver {
-  const wrap = createWrap(enabled);
+export function createColors(colorSpace: ColorSpace = getColorSpace()): Farver {
+  const wrap = createWrap(colorSpace > 0);
 
   let rgb = (r: number, g: number, b: number): ChainedFarve => wrap(`38;2;${r};${g};${b}`, 39);
   let bgRgb = (r: number, g: number, b: number): ChainedFarve => wrap(`48;2;${r};${g};${b}`, 49);
   let fg = (code: number): ChainedFarve => wrap(`38;5;${code}`, 39);
   let bg = (code: number): ChainedFarve => wrap(`48;5;${code}`, 49);
-
   if (colorSpace === 1) {
     fg = (code: number) => wrap(ansi256To16(code), 39);
     bg = (code: number) => wrap(ansi256To16(code) + 10, 49);

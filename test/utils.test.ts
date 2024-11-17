@@ -40,6 +40,7 @@ describe("convert RGB to ANSI 256", () => {
       [127, 127, 127, 244],
       [5, 5, 5, 16],
       [250, 250, 250, 231],
+      [128, 128, 128, 244],
     ])("should convert grayscale RGB to ANSI 256", (r, g, b, expected) => {
       expect(rgbToAnsi256(r, g, b)).toBe(expected);
     });
@@ -94,8 +95,10 @@ describe("convert RGB to ANSI 16", () => {
     ["magenta", "#cd00cd", 35], // magenta
     ["cyan", "#00cdcd", 36], // cyan
     ["white", "#cdcdcd", 37], // white
+
   ])("should convert RGB to ANSI 16 (%s)", (_name, hex, expected) => {
     const received = rgbToAnsi16(...hexToRgb(hex));
+
     expect(received).toBe(expected);
   });
 });
