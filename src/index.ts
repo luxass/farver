@@ -1,7 +1,8 @@
-import { isColorsSupported } from "./supports";
-import { hexToRgb } from "./utils";
+import { getColorSpace } from "./supports";
+import { ansi256To16, hexToRgb, rgbToAnsi16, rgbToAnsi256 } from "./utils";
 
-const isColorSupported = isColorsSupported();
+const colorSpace = getColorSpace();
+const isColorSupported = colorSpace > 0;
 
 export type Farve<T = string | boolean | number | null | undefined | void> = (text: T) => T;
 
@@ -93,6 +94,21 @@ function createWrap(enabled: boolean) {
 export function createColors(enabled: boolean = isColorSupported): Farver {
   const wrap = createWrap(enabled);
 
+  let rgb = (r: number, g: number, b: number): ChainedFarve => wrap(`38;2;${r};${g};${b}`, 39);
+  let bgRgb = (r: number, g: number, b: number): ChainedFarve => wrap(`48;2;${r};${g};${b}`, 49);
+  let fg = (code: number): ChainedFarve => wrap(`38;5;${code}`, 39);
+  let bg = (code: number): ChainedFarve => wrap(`48;5;${code}`, 49);
+
+  if (colorSpace === 1) {
+    fg = (code: number) => wrap(ansi256To16(code), 39);
+    bg = (code: number) => wrap(ansi256To16(code) + 10, 49);
+    rgb = (r: number, g: number, b: number) => wrap(rgbToAnsi16(r, g, b), 39);
+    bgRgb = (r: number, g: number, b: number) => wrap(rgbToAnsi16(r, g, b) + 10, 49);
+  } else if (colorSpace === 2) {
+    rgb = (r: number, g: number, b: number) => fg(rgbToAnsi256(r, g, b));
+    bgRgb = (r: number, g: number, b: number) => bg(rgbToAnsi256(r, g, b));
+  }
+
   return {
     reset: wrap(0, 0),
     bold: wrap(1, 22),
@@ -140,12 +156,13 @@ export function createColors(enabled: boolean = isColorSupported): Farver {
     bgCyanBright: wrap(106, 49),
     bgWhiteBright: wrap(107, 49),
 
-    rgb: (r: number, g: number, b: number) => wrap(`38;2;${r};${g};${b}`, 39),
-    bgRgb: (r: number, g: number, b: number) => wrap(`48;2;${r};${g};${b}`, 49),
-    fg: (code: number) => wrap(`38;5;${code}`, 39),
-    bg: (code: number) => wrap(`48;5;${code}`, 49),
-    hex: (hex: string) => wrap(`38;2;${hexToRgb(hex).join(";")}`, 39),
-    bgHex: (hex: string) => wrap(`48;2;${hexToRgb(hex).join(";")}`, 49),
+    rgb,
+    bgRgb,
+    fg,
+    bg,
+    // NOTE: maybe the ... is to slow.
+    hex: (hex: string) => rgb(...hexToRgb(hex)),
+    bgHex: (hex: string) => bgRgb(...hexToRgb(hex)),
   };
 }
 
@@ -161,12 +178,13 @@ function chain(farve: Farve): Farve {
 
         if (prop === "rgb" || prop === "bgRgb" || prop === "fg" || prop === "bg" || prop === "hex" || prop === "bgHex") {
           return (...args: number[]) => chain((text) => {
-            const currentText = farve(text);
-            return value(...args)(currentText);
+            // @ts-expect-error - all of the above functions returns a function
+            return value(...args)(farve(text));
           });
         }
 
-        return chain((text) => farve(value(text)));
+        // @ts-expect-error - all of the above functions returns a function
+        return chain((text) => value(farve(text)));
       }
 
       return target[prop as keyof Farve];
