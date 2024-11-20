@@ -185,12 +185,12 @@ function chain(farve: Farve, currentColors: Farver): Farve {
         const value = currentColors[prop as keyof Farver];
 
         if (
-          prop === "rgb" ||
-          prop === "bgRgb" ||
-          prop === "fg" ||
-          prop === "bg" ||
-          prop === "hex" ||
-          prop === "bgHex"
+          prop === "rgb"
+          || prop === "bgRgb"
+          || prop === "fg"
+          || prop === "bg"
+          || prop === "hex"
+          || prop === "bgHex"
         ) {
           return (...args: number[]) =>
             chain((text) => {
