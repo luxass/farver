@@ -64,10 +64,11 @@ interface Farver {
 
 export type ChainedFarve = Farve & Farver;
 
-function createWrap(enabled: boolean) {
+function createWrap(colorSpace: ColorSpace, colors: Farver) {
+  const enabled = colorSpace > 0;
   return function wrap(start: number | string, end: number | string): ChainedFarve {
     if (!enabled) {
-      return chain((text) => text) as ChainedFarve;
+      return chain((text) => text, colors) as ChainedFarve;
     }
     return chain((text) => {
       if (typeof text !== "string") {
@@ -84,12 +85,13 @@ function createWrap(enabled: boolean) {
       }
 
       return `\u001B[${start}m${text}\u001B[${end}m`;
-    }) as ChainedFarve;
+    }, colors) as ChainedFarve;
   };
 }
 
 export function createColors(colorSpace: ColorSpace = getColorSpace()): Farver {
-  const wrap = createWrap(colorSpace > 0);
+  const colors: Farver = {} as Farver;
+  const wrap = createWrap(colorSpace, colors);
 
   let rgb = (r: number, g: number, b: number): ChainedFarve => wrap(`38;2;${r};${g};${b}`, 39);
   let bgRgb = (r: number, g: number, b: number): ChainedFarve => wrap(`48;2;${r};${g};${b}`, 49);
@@ -105,7 +107,7 @@ export function createColors(colorSpace: ColorSpace = getColorSpace()): Farver {
     bgRgb = (r: number, g: number, b: number) => bg(rgbToAnsi256(r, g, b));
   }
 
-  return {
+  Object.assign(colors, {
     reset: wrap(0, 0),
     bold: wrap(1, 22),
     dim: wrap(2, 22),
@@ -159,28 +161,32 @@ export function createColors(colorSpace: ColorSpace = getColorSpace()): Farver {
     // NOTE: maybe the ... is to slow.
     hex: (hex: string) => rgb(...hexToRgb(hex)),
     bgHex: (hex: string) => bgRgb(...hexToRgb(hex)),
-  };
+  });
+
+  return colors;
 }
 
 export const colors: Farver = createColors();
 
 export default colors;
 
-function chain(farve: Farve): Farve {
+function chain(farve: Farve, currentColors: Farver): Farve {
   return new Proxy(farve, {
     get(target, prop) {
-      if (prop in colors) {
-        const value = colors[prop as keyof Farver];
+      if (prop in currentColors) {
+        const value = currentColors[prop as keyof Farver];
 
         if (prop === "rgb" || prop === "bgRgb" || prop === "fg" || prop === "bg" || prop === "hex" || prop === "bgHex") {
           return (...args: number[]) => chain((text) => {
-            // @ts-expect-error - all of the above functions returns a function
-            return value(...args)(farve(text));
-          });
+            // @ts-ignore - typescript is not happy with this
+            const current = value(...args)(text);
+            return farve(current);
+          }, currentColors);
         }
 
-        // @ts-expect-error - all of the above functions returns a function
-        return chain((text) => value(farve(text)));
+        return chain((text) =>
+          // @ts-ignore - typescript is not happy with this
+          farve(value(text)), currentColors);
       }
 
       return target[prop as keyof Farve];
