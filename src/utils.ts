@@ -32,7 +32,7 @@ export function hexToRgb(hex: string): [r: number, g: number, b: number] {
   // eslint-disable-next-line prefer-const
   let num = Number.parseInt(color, 16);
 
-  return [num >> 16 & 255, num >> 8 & 255, num & 255];
+  return [(num >> 16) & 255, (num >> 8) & 255, num & 255];
 }
 
 /**
@@ -71,11 +71,13 @@ export function rgbToAnsi256(r: number, g: number, b: number): number {
     return Math.round(((r - 8) / 247) * 24) + 232;
   }
 
-  return 16
+  return (
+    16 +
     // r / 255 * 5 = r / 51
-    + (36 * Math.round(r / 51))
-    + (6 * Math.round(g / 51))
-    + Math.round(b / 51);
+    36 * Math.round(r / 51) +
+    6 * Math.round(g / 51) +
+    Math.round(b / 51)
+  );
 }
 
 /**
@@ -112,7 +114,7 @@ export function ansi256To16(code: number): number {
 
   // grayscale starts at 232
   if (code >= 232) {
-    r = g = b = (((code - 232) * 10) + 8) / 255;
+    r = g = b = ((code - 232) * 10 + 8) / 255;
   } else {
     code -= 16;
     const remainder = code % 36;
@@ -128,7 +130,8 @@ export function ansi256To16(code: number): number {
     return 30;
   }
 
-  const code16 = 30 + ((Math.round(b) << 2) | (Math.round(g) << 1) | Math.round(r));
+  const code16 =
+    30 + ((Math.round(b) << 2) | (Math.round(g) << 1) | Math.round(r));
 
   return value === 2 ? code16 + 60 : code16;
 }

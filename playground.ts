@@ -19,25 +19,15 @@ console.log(farver.rgb(13, 42, 79).bgRgb(199, 120, 125)("Hello"));
 console.log(`\n${inverse(" HEX: ")} \n`);
 
 const hexColors = [
-  [
-    "#d93611",
-    "#d97511",
-    "#d9d611",
-    "#a0d911",
-    "#18d911",
-  ],
-  [
-    "#11d9c2",
-    "#119dd9",
-    "#1157d9",
-    "#6614f6",
-    "#c511d9",
-  ],
+  ["#d93611", "#d97511", "#d9d611", "#a0d911", "#18d911"],
+  ["#11d9c2", "#119dd9", "#1157d9", "#6614f6", "#c511d9"],
 ];
 
 hexColors.forEach((colors) => {
   console.log(colors.map((color) => farver.hex(color)(color)).join(" "));
-  console.log(colors.map((color) => farver.bgHex(color).black(color)).join(" "));
+  console.log(
+    colors.map((color) => farver.bgHex(color).black(color)).join(" "),
+  );
 });
 
 console.log(`\n${inverse(" ANSI 256: ")} \n`);

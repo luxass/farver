@@ -48,16 +48,9 @@ export const FMT = {
   bgWhiteBright: ["\u001B[107m", "\u001B[49m"],
 };
 
-export const TrueColorFns = [
-  "rgb",
-  "hex",
-  "bgRgb",
-  "bgHex",
-  "fg",
-  "bg",
-];
+export const TrueColorFns = ["rgb", "hex", "bgRgb", "bgHex", "fg", "bg"];
 
-export const ansiLog = process.env.FARVER_SHOW ? console.error : () => { };
+export const ansiLog = process.env.FARVER_SHOW ? console.error : () => {};
 
 export function getAnsi(text: string, ansi: keyof typeof FMT): string {
   ansiLog(`${FMT[ansi][0]}${text}${FMT[ansi][1]}`);

@@ -1,10 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  ansi256To16,
-  hexToRgb,
-  rgbToAnsi16,
-  rgbToAnsi256,
-} from "../src/utils";
+import { ansi256To16, hexToRgb, rgbToAnsi16, rgbToAnsi256 } from "../src/utils";
 
 describe("convert HEX to RGB", () => {
   it("should convert 3-digit HEX to RGB", () => {
@@ -95,7 +90,6 @@ describe("convert RGB to ANSI 16", () => {
     ["magenta", "#cd00cd", 35], // magenta
     ["cyan", "#00cdcd", 36], // cyan
     ["white", "#cdcdcd", 37], // white
-
   ])("should convert RGB to ANSI 16 (%s)", (_name, hex, expected) => {
     const received = rgbToAnsi16(...hexToRgb(hex));
 
