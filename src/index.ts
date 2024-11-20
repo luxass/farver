@@ -1,8 +1,9 @@
-import { isColorsSupported } from "./supports";
+import { type ColorSpace, getColorSpace } from "./supports";
+import { ansi256To16, hexToRgb, rgbToAnsi16, rgbToAnsi256 } from "./utils";
 
-const isColorSupported = isColorsSupported();
-
-export type Farve<T = string | boolean | number | null | undefined | void> = (text: T) => T;
+export type Farve<T = string | boolean | number | null | undefined | void> = (
+  text: T,
+) => T;
 
 interface Farver {
   // modifiers
@@ -53,14 +54,26 @@ interface Farver {
   bgMagentaBright: ChainedFarve;
   bgCyanBright: ChainedFarve;
   bgWhiteBright: ChainedFarve;
+
+  // true color
+  rgb: (r: number, g: number, b: number) => ChainedFarve;
+  bgRgb: (r: number, g: number, b: number) => ChainedFarve;
+  fg: (code: number) => ChainedFarve;
+  bg: (code: number) => ChainedFarve;
+  hex: (hex: string) => ChainedFarve;
+  bgHex: (hex: string) => ChainedFarve;
 }
 
 export type ChainedFarve = Farve & Farver;
 
-function createWrap(enabled: boolean) {
-  return function wrap(start: number, end: number): ChainedFarve {
+function createWrap(colorSpace: ColorSpace, colors: Farver) {
+  const enabled = colorSpace > 0;
+  return function wrap(
+    start: number | string,
+    end: number | string,
+  ): ChainedFarve {
     if (!enabled) {
-      return chain((text) => text) as ChainedFarve;
+      return chain((text) => text, colors) as ChainedFarve;
     }
     return chain((text) => {
       if (typeof text !== "string") {
@@ -77,14 +90,32 @@ function createWrap(enabled: boolean) {
       }
 
       return `\u001B[${start}m${text}\u001B[${end}m`;
-    }) as ChainedFarve;
+    }, colors) as ChainedFarve;
   };
 }
 
-export function createColors(enabled: boolean = isColorSupported): Farver {
-  const wrap = createWrap(enabled);
+export function createColors(colorSpace: ColorSpace = getColorSpace()): Farver {
+  const colors: Farver = {} as Farver;
+  const wrap = createWrap(colorSpace, colors);
 
-  return {
+  let rgb = (r: number, g: number, b: number): ChainedFarve =>
+    wrap(`38;2;${r};${g};${b}`, 39);
+  let bgRgb = (r: number, g: number, b: number): ChainedFarve =>
+    wrap(`48;2;${r};${g};${b}`, 49);
+  let fg = (code: number): ChainedFarve => wrap(`38;5;${code}`, 39);
+  let bg = (code: number): ChainedFarve => wrap(`48;5;${code}`, 49);
+  if (colorSpace === 1) {
+    fg = (code: number) => wrap(ansi256To16(code), 39);
+    bg = (code: number) => wrap(ansi256To16(code) + 10, 49);
+    rgb = (r: number, g: number, b: number) => wrap(rgbToAnsi16(r, g, b), 39);
+    bgRgb = (r: number, g: number, b: number) =>
+      wrap(rgbToAnsi16(r, g, b) + 10, 49);
+  } else if (colorSpace === 2) {
+    rgb = (r: number, g: number, b: number) => fg(rgbToAnsi256(r, g, b));
+    bgRgb = (r: number, g: number, b: number) => bg(rgbToAnsi256(r, g, b));
+  }
+
+  Object.assign(colors, {
     reset: wrap(0, 0),
     bold: wrap(1, 22),
     dim: wrap(2, 22),
@@ -130,19 +161,53 @@ export function createColors(enabled: boolean = isColorSupported): Farver {
     bgMagentaBright: wrap(105, 49),
     bgCyanBright: wrap(106, 49),
     bgWhiteBright: wrap(107, 49),
-  };
+
+    rgb,
+    bgRgb,
+    fg,
+    bg,
+    // NOTE: maybe the ... is to slow.
+    hex: (hex: string) => rgb(...hexToRgb(hex)),
+    bgHex: (hex: string) => bgRgb(...hexToRgb(hex)),
+  });
+
+  return colors;
 }
 
 export const colors: Farver = createColors();
 
 export default colors;
 
-function chain(farve: Farve): Farve {
+function chain(farve: Farve, currentColors: Farver): Farve {
   return new Proxy(farve, {
     get(target, prop) {
-      if (prop in colors) {
-        return chain((text) => farve(colors[prop as keyof Farver](text)));
+      if (prop in currentColors) {
+        const value = currentColors[prop as keyof Farver];
+
+        if (
+          prop === "rgb"
+          || prop === "bgRgb"
+          || prop === "fg"
+          || prop === "bg"
+          || prop === "hex"
+          || prop === "bgHex"
+        ) {
+          return (...args: number[]) =>
+            chain((text) => {
+              // @ts-ignore - typescript is not happy with this
+              const current = value(...args)(text);
+              return farve(current);
+            }, currentColors);
+        }
+
+        return chain(
+          (text) =>
+            // @ts-ignore - typescript is not happy with this
+            farve(value(text)),
+          currentColors,
+        );
       }
+
       return target[prop as keyof Farve];
     },
   });
@@ -190,6 +255,14 @@ const {
   bgMagentaBright,
   bgCyanBright,
   bgWhiteBright,
+  bgBlackBright,
+  hex,
+  bg,
+  bgHex,
+  bgRgb,
+  fg,
+  overline,
+  rgb,
 } = colors;
 
 export const foregroundColors = {
@@ -229,6 +302,7 @@ export const backgroundColors = {
   bgMagentaBright,
   bgCyanBright,
   bgWhiteBright,
+  bgBlackBright,
 };
 
 export const utilities = {
@@ -239,12 +313,15 @@ export const utilities = {
   underline,
   inverse,
   hidden,
+  overline,
   strikethrough,
 };
 
 // all colors
 export {
+  bg,
   bgBlack,
+  bgBlackBright,
   bgBlue,
   bgBlueBright,
   bgCyan,
@@ -252,10 +329,12 @@ export {
   bgGray,
   bgGreen,
   bgGreenBright,
+  bgHex,
   bgMagenta,
   bgMagentaBright,
   bgRed,
   bgRedBright,
+  bgRgb,
   bgWhite,
   bgWhiteBright,
   bgYellow,
@@ -268,17 +347,21 @@ export {
   cyan,
   cyanBright,
   dim,
+  fg,
   gray,
   green,
   greenBright,
+  hex,
   hidden,
   inverse,
   italic,
   magenta,
   magentaBright,
+  overline,
   red,
   redBright,
   reset,
+  rgb,
   strikethrough,
   underline,
   white,
