@@ -23,3 +23,48 @@ describe("handle newlines correctly", () => {
     `));
   });
 });
+
+describe("handle styles", () => {
+  it("default module", () => {
+    const output = escape(` HELLO ${farver.red("WORLD")} `);
+    expect(output).toMatchInlineSnapshot(escape(`
+      " HELLO \x1B[31mWORLD\x1B[39m "
+    `));
+  });
+
+  it("fast module", () => {
+    const output = escape(` HELLO ${fastFarver.red("WORLD")} `);
+    expect(output).toMatchInlineSnapshot(escape(`
+      " HELLO \x1B[31mWORLD\x1B[39m "
+    `));
+  });
+});
+
+describe("handle nested styles", () => {
+  it("default module", () => {
+    const output = escape(farver.green(
+      `green ${farver.red(
+        `red ${farver.blue(
+          `blue ${farver.cyan(
+            `cyan ${farver.white.italic.underline(`white italic underline`)} cyan`,
+          )} blue`,
+        )} red`,
+      )} green`,
+    ));
+
+    expect(output).toMatchInlineSnapshot(escape(`"\x1B[32mgreen \x1B[31mred \x1B[34mblue \x1B[36mcyan \x1B[37m\x1B[3m\x1B[4mwhite italic underline\x1B[24m\x1B[23m\x1B[36m cyan\x1B[34m blue\x1B[31m red\x1B[32m green\x1B[39m"`));
+  });
+
+  it("fast module", () => {
+    const output = escape(fastFarver.green(
+      `green ${fastFarver.red(
+        `red ${fastFarver.blue(
+          `blue ${fastFarver.cyan(
+            `cyan ${fastFarver.white(fastFarver.italic(fastFarver.underline(`white italic underline`)))} cyan`,
+          )} blue`,
+        )} red`,
+      )} green`,
+    ));
+    expect(output).toMatchInlineSnapshot(escape(`"\x1B[32mgreen \x1B[31mred \x1B[34mblue \x1B[36mcyan \x1B[37m\x1B[3m\x1B[4mwhite italic underline\x1B[24m\x1B[23m\x1B[36m cyan\x1B[34m blue\x1B[31m red\x1B[32m green\x1B[39m"`));
+  });
+});
