@@ -59,5 +59,5 @@ export function getAnsi(text: string, ansi: keyof typeof FMT): string {
 
 export function escape(code: any): string {
   // eslint-disable-next-line no-control-regex
-  return code.replace(/\x1B/g, "\\x1b");
+  return code.replace(/\x1B/g, "\\x1B");
 }

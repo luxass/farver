@@ -4,7 +4,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./supports": "./src/supports.ts",
-    "./utils": "./src/utils.ts"
+    "./utils": "./src/utils.ts",
+    "./fast": "./src/fast.ts"
   },
   "exclude": [
     "tsup.config.ts",
