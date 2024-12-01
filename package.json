@@ -41,6 +41,16 @@
         "default": "./dist/index.cjs"
       }
     },
+    "./fast": {
+      "import": {
+        "types": "./dist/fast.d.ts",
+        "default": "./dist/fast.mjs"
+      },
+      "require": {
+        "types": "./dist/fast.d.cts",
+        "default": "./dist/fast.cjs"
+      }
+    },
     "./supports": {
       "import": {
         "types": "./dist/supports.d.ts",

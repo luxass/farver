@@ -11,6 +11,7 @@ import farver, {
   yellow,
   yellowBright,
 } from "./src";
+import fastFarver from "./src/fast";
 
 console.log(`\n${inverse(" RGB: ")} \n`);
 console.log(farver.rgb(13, 42, 79)("blue"));
@@ -36,6 +37,7 @@ console.log(farver.bg(181).fg(18)("181 with 18"));
 
 console.log(`\n${inverse(" Newlines: ")} \n`);
 console.log(red.bgWhite("FIRST LINE \nSECOND LINE\nTHIRD LINE "));
+console.log(fastFarver.red(fastFarver.bgWhite("FIRST LINE \nSECOND LINE\nTHIRD LINE ")));
 
 console.log(`\n${inverse(" Nested Syntax: ")} \n`);
 
