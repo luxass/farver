@@ -7,11 +7,9 @@
     "lib": [
       "ES2022"
     ],
-    "useDefineForClassFields": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "resolveJsonModule": true,
-    "allowJs": true,
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "declaration": true,
@@ -19,6 +17,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "verbatimModuleSyntax": true,
+    "skipDefaultLibCheck": true,
     "skipLibCheck": true
   },
   "exclude": ["node_modules", "dist"]
