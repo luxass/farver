@@ -1,6 +1,6 @@
 {
   "name": "@luxass/farver",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "exports": {
     ".": "./src/index.ts",
     "./supports": "./src/supports.ts",
