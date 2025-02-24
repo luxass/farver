@@ -1,9 +1,9 @@
 import { type ColorSpace, getColorSpace } from "./supports";
 import { ansi256To16, hexToRgb, rgbToAnsi16, rgbToAnsi256 } from "./utils";
 
-type FarveFn<T = string | boolean | number | null | undefined | void> = (
-  text: T,
-) => T;
+type FarveFn = (
+  text: string | boolean | number | null | undefined,
+) => string;
 
 export interface FastFarver {
   // modifiers

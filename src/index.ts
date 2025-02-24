@@ -1,9 +1,9 @@
 import { type ColorSpace, getColorSpace } from "./supports";
 import { ansi256To16, hexToRgb, rgbToAnsi16, rgbToAnsi256 } from "./utils";
 
-export type Farve<T = string | boolean | number | null | undefined | void> = (
-  text: T,
-) => T;
+export type Farve = (
+  text: string | boolean | number | null | undefined,
+) => string;
 
 interface Farver {
   // modifiers
@@ -73,7 +73,7 @@ function createWrap(colorSpace: ColorSpace, colors: Farver) {
     end: number | string,
   ): ChainedFarve {
     if (!enabled) {
-      return chain((text) => text, colors) as ChainedFarve;
+      return chain((text) => `${text}`, colors) as ChainedFarve;
     }
     return chain((text) => {
       if (typeof text !== "string") {
