@@ -5,7 +5,8 @@
     ".": "./src/index.ts",
     "./supports": "./src/supports.ts",
     "./utils": "./src/utils.ts",
-    "./fast": "./src/fast.ts"
+    "./fast": "./src/fast.ts",
+    "./gradients": "./src/gradients.ts"
   },
   "exclude": [
     "tsup.config.ts",

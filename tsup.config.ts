@@ -6,6 +6,7 @@ export default defineConfig({
     "./src/supports.ts",
     "./src/utils.ts",
     "./src/fast.ts",
+    "./src/gradients.ts",
   ],
   format: ["cjs", "esm"],
   platform: "node",

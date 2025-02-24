@@ -71,6 +71,16 @@
         "default": "./dist/utils.cjs"
       }
     },
+    "./gradients": {
+      "import": {
+        "types": "./dist/gradients.d.ts",
+        "default": "./dist/gradients.mjs"
+      },
+      "require": {
+        "types": "./dist/gradients.d.cts",
+        "default": "./dist/gradients.cjs"
+      }
+    },
     "./package.json": "./package.json"
   },
   "main": "dist/index.cjs",
