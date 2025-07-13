@@ -32,50 +32,26 @@
   ],
   "exports": {
     ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
-      }
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./fast": {
-      "import": {
-        "types": "./dist/fast.d.ts",
-        "default": "./dist/fast.mjs"
-      },
-      "require": {
-        "types": "./dist/fast.d.cts",
-        "default": "./dist/fast.cjs"
-      }
+      "import": "./dist/fast.js",
+      "require": "./dist/fast.cjs"
     },
     "./supports": {
-      "import": {
-        "types": "./dist/supports.d.ts",
-        "default": "./dist/supports.mjs"
-      },
-      "require": {
-        "types": "./dist/supports.d.cts",
-        "default": "./dist/supports.cjs"
-      }
+      "import": "./dist/supports.js",
+      "require": "./dist/supports.cjs"
     },
     "./utils": {
-      "import": {
-        "types": "./dist/utils.d.ts",
-        "default": "./dist/utils.mjs"
-      },
-      "require": {
-        "types": "./dist/utils.d.cts",
-        "default": "./dist/utils.cjs"
-      }
+      "import": "./dist/utils.js",
+      "require": "./dist/utils.cjs"
     },
     "./package.json": "./package.json"
   },
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.cts",
   "files": [
     "dist"
   ],
@@ -91,7 +67,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "termenv": "^0.5.0"
+    "termenv": "^0.5.1"
   },
   "devDependencies": {
     "@luxass/eslint-config": "^5.1.0",

@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       termenv:
-        specifier: ^0.5.0
-        version: 0.5.0
+        specifier: ^0.5.1
+        version: 0.5.1
     devDependencies:
       '@luxass/eslint-config':
         specifier: ^5.1.0
@@ -1821,8 +1821,8 @@ packages:
     resolution: {integrity: sha512-Re10+NauLTMCudc7T5WLFLAwDhQ0JWdrMK+9B2M8zR5hRExKmsRDCBA7/aV/pNJFltmBFO5BAMlQFi/vq3nKOg==}
     engines: {node: '>=6'}
 
-  termenv@0.5.0:
-    resolution: {integrity: sha512-i0Gtthni+FvhYjQ84EfSY2cSRnscbky3CwbfWm5IdYFD8uisXCaV+Ak/gz2Rf/NpE45eZB6Qk9+hRe/6jBmpjg==}
+  termenv@0.5.1:
+    resolution: {integrity: sha512-oq/jRacvFZnbXLjOUr7/6AbNoHkWVUa1YGnGrEtFR/e1ZQacGYtjPJWVMcYj13FlxB4oql9rlTkauhxUfhouSg==}
     engines: {node: '>=20'}
 
   tinybench@2.9.0:
@@ -4011,7 +4011,7 @@ snapshots:
 
   tapable@2.2.2: {}
 
-  termenv@0.5.0: {}
+  termenv@0.5.1: {}
 
   tinybench@2.9.0: {}
 
