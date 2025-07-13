@@ -8,7 +8,7 @@
     "email": "lucasnrgaard@gmail.com",
     "url": "https://luxass.dev"
   },
-  "packageManager": "pnpm@10.12.4",
+  "packageManager": "pnpm@10.13.1",
   "license": "MIT",
   "homepage": "https://github.com/luxass/farver",
   "repository": {
@@ -91,12 +91,12 @@
     "termenv": "^0.4.2"
   },
   "devDependencies": {
-    "@luxass/eslint-config": "^4.16.0",
+    "@luxass/eslint-config": "^5.1.0",
     "@types/node": "^22.0.0",
-    "eslint": "^9.22.0",
+    "eslint": "^9.31.0",
     "eslint-plugin-format": "^1.0.1",
-    "tsup": "^8.4.0",
-    "typescript": "^5.8.2",
-    "vitest": "^3.0.8"
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
   }
 }
