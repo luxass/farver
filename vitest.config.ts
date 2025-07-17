@@ -4,7 +4,7 @@ export default defineConfig({
   test: {
     exclude: [
       "test-deno/**/*.test.ts",
-      "test-bun/**/*.spec.ts",
+      "test-bun/**/*.test.ts",
       ...defaultExclude,
     ],
     coverage: {
