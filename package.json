@@ -67,7 +67,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "termenv": "^0.5.1"
+    "termenv": "^1.0.0-beta.2"
   },
   "devDependencies": {
     "@luxass/eslint-config": "^5.1.0",
