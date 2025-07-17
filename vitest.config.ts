@@ -6,5 +6,9 @@ export default defineConfig({
       "test-deno/**/*.test.ts",
       ...defaultExclude,
     ],
+    coverage: {
+      provider: "v8",
+      include: ["src/**/*.ts"],
+    },
   },
 });
