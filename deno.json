@@ -45,6 +45,7 @@
       "scripts/**",
       "test/**",
       "test-deno/**",
+      "test-bun/**",
       "tsconfig.json",
       "playground.ts",
       "vitest.config.ts",
