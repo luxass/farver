@@ -7,5 +7,9 @@ export default defineConfig({
       "test-bun/**/*.spec.ts",
       ...defaultExclude,
     ],
+    coverage: {
+      provider: "v8",
+      include: ["src/**/*.ts"],
+    },
   },
 });
