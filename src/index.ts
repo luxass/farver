@@ -1,5 +1,5 @@
-import type { ColorSpace } from "./supports";
-import { getColorSpace } from "./supports";
+import type { ColorSpace } from "termenv/supports";
+import { getColorSpace } from "termenv/supports";
 import { ansi256To16, hexToRgb, rgbToAnsi16, rgbToAnsi256 } from "./utils";
 
 export type Farve = (

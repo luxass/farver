@@ -1,3 +1,6 @@
+import { getTerminalEnvironment } from "termenv";
+import { getColorSpace } from "termenv/supports";
+
 import farver, {
   blue,
   cyan,
@@ -11,7 +14,11 @@ import farver, {
   yellow,
   yellowBright,
 } from "./src";
+
 import fastFarver from "./src/fast";
+
+console.log(`Color Space: ${getColorSpace()}\n`);
+console.log(`Runtime: ${getTerminalEnvironment().isTTY}\n`);
 
 console.log(`\n${inverse(" RGB: ")} \n`);
 console.log(farver.rgb(13, 42, 79)("blue"));

@@ -1,4 +1,4 @@
-import { defineConfig } from "tsup";
+import { defineConfig } from "tsdown";
 
 export default defineConfig({
   entry: [
@@ -11,12 +11,8 @@ export default defineConfig({
   platform: "node",
   target: "es2022",
   dts: true,
-  bundle: true,
   clean: true,
-  outExtension(ctx) {
-    return {
-      js: ctx.format === "cjs" ? ".cjs" : ".mjs",
-    };
-  },
+  exports: true,
+  publint: true,
   tsconfig: "./tsconfig.json",
 });
