@@ -12,9 +12,14 @@ describe("browser integration tests", () => {
   it("should always support true colors", async () => {
     const supports = await import("../../src/supports.ts");
     const env = await import("termenv").then((m) => m.getTerminalEnvironment());
-
     expect(supports).toBeDefined();
-
+    // eslint-disable-next-line no-console
+    console.log("Environment:", {
+      platform: env.platform,
+      runtime: env.runtime,
+      colorterm: env.env.COLORTERM,
+      term: env.env.TERM,
+    });
     const colorSpaceByRuntime = supports.getColorSpaceByRuntime(env);
     const colorSpace = supports.getColorSpace();
     // eslint-disable-next-line no-console
