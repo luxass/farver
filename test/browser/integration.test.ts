@@ -13,8 +13,10 @@ describe("browser integration tests", () => {
     const supports = await import("../../src/supports.ts");
     const env = await import("termenv").then((m) => m.getTerminalEnvironment());
     expect(supports).toBeDefined();
+
+    // @ts-expect-error sdfsdf
     // eslint-disable-next-line no-console
-    console.log(globalThis.window);
+    console.log(globalThis.window?.chrome);
     // eslint-disable-next-line no-console
     console.log("Environment:", {
       platform: env.platform,
