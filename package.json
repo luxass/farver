@@ -35,10 +35,6 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./fast": {
-      "import": "./dist/fast.js",
-      "require": "./dist/fast.cjs"
-    },
     "./supports": {
       "import": "./dist/supports.js",
       "require": "./dist/supports.cjs"
