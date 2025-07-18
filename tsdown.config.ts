@@ -5,7 +5,6 @@ export default defineConfig({
     "./src/index.ts",
     "./src/supports.ts",
     "./src/utils.ts",
-    "./src/fast.ts",
   ],
   format: ["cjs", "esm"],
   platform: "node",
