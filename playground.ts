@@ -15,8 +15,6 @@ import farver, {
   yellowBright,
 } from "./src";
 
-import fastFarver from "./src/fast";
-
 console.log(`Color Space: ${getColorSpace()}\n`);
 console.log(`Runtime: ${getTerminalEnvironment().isTTY}\n`);
 
@@ -44,7 +42,6 @@ console.log(farver.bg(181).fg(18)("181 with 18"));
 
 console.log(`\n${inverse(" Newlines: ")} \n`);
 console.log(red.bgWhite("FIRST LINE \nSECOND LINE\nTHIRD LINE "));
-console.log(fastFarver.red(fastFarver.bgWhite("FIRST LINE \nSECOND LINE\nTHIRD LINE ")));
 
 console.log(`\n${inverse(" Nested Syntax: ")} \n`);
 
