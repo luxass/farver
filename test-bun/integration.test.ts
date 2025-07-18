@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { escape } from "../test/shared.ts";
+import { escapeAnsi } from "../test/shared.ts";
 
 describe("Bun Integration Tests", () => {
   it("should import main module correctly", async () => {
@@ -10,7 +10,7 @@ describe("Bun Integration Tests", () => {
     expect(typeof farver.default).toBe("object");
 
     const redText = farver.red("test");
-    const escapedRedText = escape(redText);
+    const escapedRedText = escapeAnsi(redText);
 
     expect(escapedRedText).toBe("\\x1B[31mtest\\x1B[39m");
   });
@@ -48,7 +48,7 @@ describe("Bun Integration Tests", () => {
     const farver = await import("../src/index.ts");
 
     const colored = farver.green("bun test");
-    const coloredEscaped = escape(colored);
+    const coloredEscaped = escapeAnsi(colored);
 
     expect(typeof colored).toBe("string");
     expect(colored.length).toBeGreaterThan("bun test".length);
@@ -69,7 +69,7 @@ describe("Bun Integration Tests", () => {
     const farver = await import("../src/index.ts");
 
     const output = farver.red.bgWhite("bun");
-    const escapedOutput = escape(output);
+    const escapedOutput = escapeAnsi(output);
 
     expect(escapedOutput).toBe("\\x1B[31m\\x1B[47mbun\\x1B[49m\\x1B[39m");
   });
@@ -78,7 +78,7 @@ describe("Bun Integration Tests", () => {
     const farver = await import("../src/index.ts");
 
     const nested = farver.green(`outer ${farver.red("inner")} outer`);
-    const escapedNested = escape(nested);
+    const escapedNested = escapeAnsi(nested);
 
     expect(escapedNested).toBe("\\x1B[32mouter \\x1B[31minner\\x1B[32m outer\\x1B[39m");
   });
@@ -87,15 +87,15 @@ describe("Bun Integration Tests", () => {
     const farver = await import("../src/index.ts");
 
     const fgText = farver.fg(196)("red text");
-    const escapedFg = escape(fgText);
+    const escapedFg = escapeAnsi(fgText);
     expect(escapedFg).toBe("\\x1B[38;5;196mred text\\x1B[39m");
 
     const bgText = farver.bg(46)("green background");
-    const escapedBg = escape(bgText);
+    const escapedBg = escapeAnsi(bgText);
     expect(escapedBg).toBe("\\x1B[48;5;46mgreen background\\x1B[49m");
 
     const combinedText = farver.fg(226).bg(21)("yellow on blue");
-    const escapedCombined = escape(combinedText);
+    const escapedCombined = escapeAnsi(combinedText);
     expect(escapedCombined).toBe("\\x1B[38;5;226m\\x1B[48;5;21myellow on blue\\x1B[49m\\x1B[39m");
   });
 });

@@ -3,7 +3,7 @@
 
 import { expect } from "@std/expect";
 import { describe, it } from "@std/testing/bdd";
-import { escape } from "../test/shared.ts";
+import { escapeAnsi } from "../test/shared.ts";
 
 describe("Deno Integration Tests", () => {
   it("should import main module correctly", async () => {
@@ -71,7 +71,7 @@ describe("Deno Integration Tests", () => {
     const farver = await import("../src/index.ts");
 
     const output = farver.red.bgWhite("deno");
-    const escapedOutput = escape(output);
+    const escapedOutput = escapeAnsi(output);
 
     expect(escapedOutput).toContain("\\x1B[31m");
     expect(escapedOutput).toContain("\\x1B[47m");
@@ -84,7 +84,7 @@ describe("Deno Integration Tests", () => {
     const farver = await import("../src/index.ts");
 
     const nested = farver.green(`outer ${farver.red("inner")} outer`);
-    const escapedNested = escape(nested);
+    const escapedNested = escapeAnsi(nested);
 
     expect(escapedNested).toContain("\\x1B[32m");
     expect(escapedNested).toContain("\\x1B[31m");
@@ -118,8 +118,8 @@ it({
     const greenText = farver.green("hello");
     const complexText = farver.red.bgYellow.bold("complex");
 
-    expect(escape(redText)).toBe("\\x1B[31mtest\\x1B[39m");
-    expect(escape(greenText)).toBe("\\x1B[32mhello\\x1B[39m");
-    expect(escape(complexText)).toBe("\\x1B[31m\\x1B[43m\\x1B[1mcomplex\\x1B[22m\\x1B[49m\\x1B[39m");
+    expect(escapeAnsi(redText)).toBe("\\x1B[31mtest\\x1B[39m");
+    expect(escapeAnsi(greenText)).toBe("\\x1B[32mhello\\x1B[39m");
+    expect(escapeAnsi(complexText)).toBe("\\x1B[31m\\x1B[43m\\x1B[1mcomplex\\x1B[22m\\x1B[49m\\x1B[39m");
   },
 });

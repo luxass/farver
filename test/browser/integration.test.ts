@@ -1,7 +1,7 @@
 /// <reference types="@vitest/browser/providers/playwright" />
 
 import { describe, expect, it } from "vitest";
-import { escape } from "../shared";
+import { escapeAnsi } from "../shared";
 
 describe("browser integration tests", () => {
   it("should work in browser environment", () => {
@@ -31,9 +31,9 @@ describe("browser integration tests", () => {
     const greenText = farver.green("success");
     const blueText = farver.blue("info");
 
-    expect(escape(redText)).toBe("\\x1B[31merror\\x1B[39m");
-    expect(escape(greenText)).toBe("\\x1B[32msuccess\\x1B[39m");
-    expect(escape(blueText)).toBe("\\x1B[34minfo\\x1B[39m");
+    expect(escapeAnsi(redText)).toBe("\\x1B[31merror\\x1B[39m");
+    expect(escapeAnsi(greenText)).toBe("\\x1B[32msuccess\\x1B[39m");
+    expect(escapeAnsi(blueText)).toBe("\\x1B[34minfo\\x1B[39m");
   });
 
   it("should handle DOM element text content", async () => {
@@ -56,8 +56,8 @@ describe("browser integration tests", () => {
     const colors16 = farver.createColors(supports.SPACE_16_COLORS);
     const colors256 = farver.createColors(supports.SPACE_256_COLORS);
 
-    expect(escape(colors16.red("test"))).toBe("\\x1B[31mtest\\x1B[39m");
-    expect(escape(colors256.fg(196)("test"))).toBe("\\x1B[38;5;196mtest\\x1B[39m");
+    expect(escapeAnsi(colors16.red("test"))).toBe("\\x1B[31mtest\\x1B[39m");
+    expect(escapeAnsi(colors256.fg(196)("test"))).toBe("\\x1B[38;5;196mtest\\x1B[39m");
   });
 
   it("should handle browser console compatibility", async () => {

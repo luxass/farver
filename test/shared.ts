@@ -56,7 +56,7 @@ export function getAnsi(text: string, ansi: keyof typeof FMT): string {
   return `${FMT[ansi][0]}${text}${FMT[ansi][1]}`;
 }
 
-export function escape(code: any): string {
+export function escapeAnsi(code: any): string {
   // eslint-disable-next-line no-control-regex
   return code.replace(/\x1B/g, "\\x1B");
 }
