@@ -14,16 +14,6 @@ describe("browser integration tests", () => {
     const env = await import("termenv").then((m) => m.getTerminalEnvironment());
     expect(supports).toBeDefined();
 
-    // @ts-expect-error sdfsdf
-    // eslint-disable-next-line no-console
-    console.log(globalThis.window?.chrome);
-    // eslint-disable-next-line no-console
-    console.log("Environment:", {
-      platform: env.platform,
-      runtime: env.runtime,
-      colorterm: env.env.COLORTERM,
-      term: env.env.TERM,
-    });
     const colorSpaceByRuntime = supports.getColorSpaceByRuntime(env);
     const colorSpace = supports.getColorSpace();
     // eslint-disable-next-line no-console
