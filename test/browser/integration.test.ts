@@ -14,6 +14,8 @@ describe("browser integration tests", () => {
     const env = await import("termenv").then((m) => m.getTerminalEnvironment());
     expect(supports).toBeDefined();
     // eslint-disable-next-line no-console
+    console.log(globalThis.window);
+    // eslint-disable-next-line no-console
     console.log("Environment:", {
       platform: env.platform,
       runtime: env.runtime,
