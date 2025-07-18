@@ -6,7 +6,6 @@ import {
 import { describe, expect, it } from "vitest";
 import {
   bgBlack,
-  bgBlackBright,
   bgBlue,
   bgBlueBright,
   bgCyan,
@@ -23,7 +22,6 @@ import {
   bgYellow,
   bgYellowBright,
   black,
-  blackBright,
   blue,
   blueBright,
   createColors,
@@ -54,7 +52,6 @@ describe("ansi colors match", () => {
     ["cyan", cyan, ["\u001B[36m", "\u001B[39m"]],
     ["white", white, ["\u001B[37m", "\u001B[39m"]],
     ["gray", gray, ["\u001B[90m", "\u001B[39m"]],
-    ["blackBright", blackBright, ["\u001B[90m", "\u001B[39m"]],
     ["redBright", redBright, ["\u001B[91m", "\u001B[39m"]],
     ["greenBright", greenBright, ["\u001B[92m", "\u001B[39m"]],
     ["yellowBright", yellowBright, ["\u001B[93m", "\u001B[39m"]],
@@ -71,7 +68,6 @@ describe("ansi colors match", () => {
     ["bgCyan", bgCyan, ["\u001B[46m", "\u001B[49m"]],
     ["bgWhite", bgWhite, ["\u001B[47m", "\u001B[49m"]],
     ["bgGray", bgGray, ["\u001B[100m", "\u001B[49m"]],
-    ["bgBlackBright", bgBlackBright, ["\u001B[100m", "\u001B[49m"]],
     ["bgRedBright", bgRedBright, ["\u001B[101m", "\u001B[49m"]],
     ["bgGreenBright", bgGreenBright, ["\u001B[102m", "\u001B[49m"]],
     ["bgYellowBright", bgYellowBright, ["\u001B[103m", "\u001B[49m"]],
@@ -139,7 +135,6 @@ describe("colors disabled", () => {
     ["cyan", COLORS_DISABLED.cyan, ["\u001B[36m", "\u001B[39m"]],
     ["white", COLORS_DISABLED.white, ["\u001B[37m", "\u001B[39m"]],
     ["gray", COLORS_DISABLED.gray, ["\u001B[90m", "\u001B[39m"]],
-    ["blackBright", COLORS_DISABLED.blackBright, ["\u001B[90m", "\u001B[39m"]],
     ["redBright", COLORS_DISABLED.redBright, ["\u001B[91m", "\u001B[39m"]],
     ["greenBright", COLORS_DISABLED.greenBright, ["\u001B[92m", "\u001B[39m"]],
     [
@@ -164,11 +159,6 @@ describe("colors disabled", () => {
     ["bgCyan", COLORS_DISABLED.bgCyan, ["\u001B[46m", "\u001B[49m"]],
     ["bgWhite", COLORS_DISABLED.bgWhite, ["\u001B[47m", "\u001B[49m"]],
     ["bgGray", COLORS_DISABLED.bgGray, ["\u001B[100m", "\u001B[49m"]],
-    [
-      "bgBlackBright",
-      COLORS_DISABLED.bgBlackBright,
-      ["\u001B[100m", "\u001B[49m"],
-    ],
     ["bgRedBright", COLORS_DISABLED.bgRedBright, ["\u001B[101m", "\u001B[49m"]],
     [
       "bgGreenBright",

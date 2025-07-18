@@ -28,7 +28,6 @@ interface Farver {
   cyan: ChainedFarve;
   white: ChainedFarve;
   gray: ChainedFarve;
-  blackBright: ChainedFarve;
   redBright: ChainedFarve;
   greenBright: ChainedFarve;
   yellowBright: ChainedFarve;
@@ -47,7 +46,6 @@ interface Farver {
   bgCyan: ChainedFarve;
   bgWhite: ChainedFarve;
   bgGray: ChainedFarve;
-  bgBlackBright: ChainedFarve;
   bgRedBright: ChainedFarve;
   bgGreenBright: ChainedFarve;
   bgYellowBright: ChainedFarve;
@@ -230,7 +228,6 @@ const {
   cyan,
   white,
   gray,
-  blackBright,
   redBright,
   greenBright,
   yellowBright,
@@ -254,7 +251,6 @@ const {
   bgMagentaBright,
   bgCyanBright,
   bgWhiteBright,
-  bgBlackBright,
   hex,
   bg,
   bgHex,
@@ -274,7 +270,6 @@ export const foregroundColors = {
   cyan,
   white,
   gray,
-  blackBright,
   redBright,
   greenBright,
   yellowBright,
@@ -301,7 +296,6 @@ export const backgroundColors = {
   bgMagentaBright,
   bgCyanBright,
   bgWhiteBright,
-  bgBlackBright,
 };
 
 export const utilities = {
@@ -320,7 +314,6 @@ export const utilities = {
 export {
   bg,
   bgBlack,
-  bgBlackBright,
   bgBlue,
   bgBlueBright,
   bgCyan,
@@ -339,7 +332,6 @@ export {
   bgYellow,
   bgYellowBright,
   black,
-  blackBright,
   blue,
   blueBright,
   bold,
