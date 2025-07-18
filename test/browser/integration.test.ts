@@ -9,6 +9,23 @@ describe("browser integration tests", () => {
     expect(typeof document).toBe("object");
   });
 
+  it("should always support true colors", async () => {
+    const supports = await import("../../src/supports.ts");
+    const env = await import("termenv").then((m) => m.getTerminalEnvironment());
+
+    expect(supports).toBeDefined();
+
+    const colorSpaceByRuntime = supports.getColorSpaceByRuntime(env);
+    // eslint-disable-next-line no-console
+    console.log("Color space by runtime:", colorSpaceByRuntime);
+    expect(colorSpaceByRuntime).toBe(supports.SPACE_TRUE_COLORS);
+
+    const colorSpace = supports.getColorSpace();
+    // eslint-disable-next-line no-console
+    console.log("Color space detected:", colorSpace);
+    expect(colorSpace).toBe(supports.SPACE_TRUE_COLORS);
+  });
+
   it("should generate ANSI codes for console output", async () => {
     const farver = await import("../../src/index.ts");
     const redText = farver.red("error");
