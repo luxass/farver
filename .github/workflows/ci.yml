@@ -74,7 +74,12 @@ jobs:
         run: pnpm build
 
       - name: test
+        if: matrix.os != 'ubuntu-latest'
         run: pnpm test
+
+      - name: test
+        if: matrix.os == 'ubuntu-latest'
+        run: xvfb-run pnpm test
 
   deno:
     name: test-deno
