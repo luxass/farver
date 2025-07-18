@@ -26,7 +26,6 @@ describe("Deno Integration Tests", () => {
     expect(typeof utils.ansi256To16).toBe("function");
     expect(typeof utils.rgbToAnsi16).toBe("function");
 
-    // Test actual functionality
     expect(utils.hexToRgb("#FF0000")).toEqual([255, 0, 0]);
     expect(utils.rgbToAnsi256(255, 0, 0)).toBe(196);
     expect(utils.ansi256To16(196)).toBe(91);
@@ -52,7 +51,6 @@ describe("Deno Integration Tests", () => {
   it("should handle Deno environment variables", async () => {
     const farver = await import("../src/index.ts");
 
-    // Test that colors work regardless of Deno environment
     const colored = farver.green("deno test");
     expect(typeof colored).toBe("string");
     expect(colored.length).toBeGreaterThan("deno test".length);
@@ -60,7 +58,6 @@ describe("Deno Integration Tests", () => {
   });
 
   it("should work with Deno's module resolution", async () => {
-    // Test that all exports are available
     const farver = await import("../src/index.ts");
     const utils = await import("../src/utils.ts");
     const supports = await import("../src/supports.ts");
@@ -117,12 +114,10 @@ it({
     expect(typeof farver.red).toBe("function");
     expect(typeof farver.createColors).toBe("function");
 
-    // Color functions should work but return uncolored text without env access
     const redText = farver.red("test");
     const greenText = farver.green("hello");
     const complexText = farver.red.bgYellow.bold("complex");
 
-    // Without env permissions, output should be just the text (no ANSI codes)
     expect(escape(redText)).toBe("\\x1B[31mtest\\x1B[39m");
     expect(escape(greenText)).toBe("\\x1B[32mhello\\x1B[39m");
     expect(escape(complexText)).toBe("\\x1B[31m\\x1B[43m\\x1B[1mcomplex\\x1B[22m\\x1B[49m\\x1B[39m");
