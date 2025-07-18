@@ -67,18 +67,25 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "termenv": "^1.0.0-beta.2"
+    "termenv": "^1.0.0-beta.4"
   },
   "devDependencies": {
-    "@luxass/eslint-config": "^5.1.0",
+    "@luxass/eslint-config": "^5.1.1",
     "@types/bun": "^1.2.18",
     "@types/node": "^22.0.0",
+    "@vitest/browser": "^3.2.4",
     "@vitest/coverage-v8": "3.2.4",
     "eslint": "^9.31.0",
     "eslint-plugin-format": "^1.0.1",
+    "playwright": "^1.54.1",
     "publint": "^0.3.12",
     "tsdown": "^0.12.9",
     "typescript": "^5.8.3",
     "vitest": "^3.2.4"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "playwright"
+    ]
   }
 }

@@ -1,5 +1,3 @@
-import process from "node:process";
-
 export const FMT = {
   reset: ["\u001B[0m", "\u001B[0m"],
   bold: ["\u001B[1m", "\u001B[22m"],
@@ -50,7 +48,8 @@ export const FMT = {
 
 export const TrueColorFns = ["rgb", "hex", "bgRgb", "bgHex", "fg", "bg"];
 
-export const ansiLog = process.env.FARVER_SHOW ? console.error : () => {};
+// eslint-disable-next-line node/prefer-global/process
+export const ansiLog = (globalThis.process ?? {})?.env?.FARVER_SHOW ? console.error : () => {};
 
 export function getAnsi(text: string, ansi: keyof typeof FMT): string {
   ansiLog(`${FMT[ansi][0]}${text}${FMT[ansi][1]}`);
