@@ -16,13 +16,13 @@ describe("browser integration tests", () => {
     expect(supports).toBeDefined();
 
     const colorSpaceByRuntime = supports.getColorSpaceByRuntime(env);
-    // eslint-disable-next-line no-console
-    console.log("Color space by runtime:", colorSpaceByRuntime);
-    expect(colorSpaceByRuntime).toBe(supports.SPACE_TRUE_COLORS);
-
     const colorSpace = supports.getColorSpace();
     // eslint-disable-next-line no-console
+    console.log("Color space by runtime:", colorSpaceByRuntime);
+    // eslint-disable-next-line no-console
     console.log("Color space detected:", colorSpace);
+
+    expect(colorSpaceByRuntime).toBe(supports.SPACE_TRUE_COLORS);
     expect(colorSpace).toBe(supports.SPACE_TRUE_COLORS);
   });
 
