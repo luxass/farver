@@ -41,7 +41,7 @@ import {
   yellow,
   yellowBright,
 } from "../src";
-import { ansiLog, escape, FMT, getAnsi } from "./shared";
+import { ansiLog, escapeAnsi, FMT, getAnsi } from "./shared";
 
 describe("ansi colors match", () => {
   it.each([
@@ -82,7 +82,7 @@ describe("ansi colors match", () => {
   ])("expect color %s to match their ansi color", (colorName, color, ansi) => {
     const received = color(colorName);
 
-    expect(escape(received)).toBe(escape(`${ansi[0]}${colorName}${ansi[1]}`));
+    expect(escapeAnsi(received)).toBe(escapeAnsi(`${ansi[0]}${colorName}${ansi[1]}`));
   });
 });
 
@@ -203,8 +203,8 @@ describe("colors disabled", () => {
   ])("expect color %s to match their ansi color", (colorName, color, ansi) => {
     const received = color(colorName);
 
-    expect(escape(received)).not.toBe(
-      escape(`${ansi[0]}${colorName}${ansi[1]}`),
+    expect(escapeAnsi(received)).not.toBe(
+      escapeAnsi(`${ansi[0]}${colorName}${ansi[1]}`),
     );
     expect(received).toBe(colorName);
   });
@@ -275,7 +275,7 @@ describe("should downscale true colors", () => {
       const received = truecolorFn("foreground");
       const expected = ansiFn("foreground");
 
-      expect(escape(received)).toBe(escape(expected));
+      expect(escapeAnsi(received)).toBe(escapeAnsi(expected));
     });
 
     it.each([
@@ -355,7 +355,7 @@ describe("should downscale true colors", () => {
       const received = truecolorFn("background");
       const expected = ansiFn("background");
 
-      expect(escape(received)).toBe(escape(expected));
+      expect(escapeAnsi(received)).toBe(escapeAnsi(expected));
     });
 
     it("handle nested colors", () => {
@@ -364,7 +364,7 @@ describe("should downscale true colors", () => {
       const received = colors.bgHex("#1BE011").hex("#11D9C2")("nested");
       const expected = colors.bgGreen.cyan("nested");
 
-      expect(escape(received)).toBe(escape(expected));
+      expect(escapeAnsi(received)).toBe(escapeAnsi(expected));
     });
 
     it("handle deep nested colors", () => {
@@ -377,7 +377,7 @@ describe("should downscale true colors", () => {
         .hex("#C511D9")("deep nested");
       const expected = colors.bgGreen.cyan.bgGreenBright.magenta("deep nested");
 
-      expect(escape(received)).toBe(escape(expected));
+      expect(escapeAnsi(received)).toBe(escapeAnsi(expected));
     });
   });
 
@@ -421,7 +421,7 @@ describe("should downscale true colors", () => {
       const received = truecolorFn("foreground");
       const expected = ansiFn("foreground");
 
-      expect(escape(received)).toBe(escape(expected));
+      expect(escapeAnsi(received)).toBe(escapeAnsi(expected));
     });
 
     it.each([
@@ -473,7 +473,7 @@ describe("should downscale true colors", () => {
       const received = truecolorFn("background");
       const expected = ansiFn("background");
 
-      expect(escape(received)).toBe(escape(expected));
+      expect(escapeAnsi(received)).toBe(escapeAnsi(expected));
     });
 
     it("handle nested colors", () => {
@@ -482,7 +482,7 @@ describe("should downscale true colors", () => {
       const received = colors.bgHex("#1BE011").hex("#11D9C2")("nested");
       const expected = colors.bg(76).fg(44)("nested");
 
-      expect(escape(received)).toBe(escape(expected));
+      expect(escapeAnsi(received)).toBe(escapeAnsi(expected));
     });
 
     it("handle deep nested colors", () => {
@@ -495,7 +495,7 @@ describe("should downscale true colors", () => {
         .hex("#C511D9")("deep nested");
       const expected = colors.bg(76).fg(44).bg(46).fg(164)("deep nested");
 
-      expect(escape(received)).toBe(escape(expected));
+      expect(escapeAnsi(received)).toBe(escapeAnsi(expected));
     });
   });
 });

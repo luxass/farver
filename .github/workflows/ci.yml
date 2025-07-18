@@ -74,7 +74,12 @@ jobs:
         run: pnpm build
 
       - name: test
+        if: matrix.os != 'ubuntu-latest'
         run: pnpm test
+
+      - name: test
+        if: matrix.os == 'ubuntu-latest'
+        run: xvfb-run pnpm test
 
   deno:
     name: test-deno
@@ -93,6 +98,9 @@ jobs:
         uses: denoland/setup-deno@e95548e56dfa95d4e1a28d6f422fafe75c4c26fb # v2.0.3
         with:
           deno-version: ${{ matrix.deno-version }}
+
+      - name: install deno dependencies
+        run: deno install
 
       - name: run deno test
         run: deno test --config=deno.json --allow-env
@@ -117,6 +125,9 @@ jobs:
         with:
           bun-version: ${{ matrix.bun-version }}
           no-cache: true
+
+      - name: install
+        run: bun install
 
       - name: run bun test
         run: bun test test-bun/

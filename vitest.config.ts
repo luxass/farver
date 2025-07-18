@@ -35,7 +35,13 @@ export default defineConfig({
             enabled: true,
             provider: "playwright",
             instances: [
-              { browser: "chromium" },
+              {
+                browser: "chromium",
+                // We can't use headless mode in browser tests, because window.chrome is not defined in headless mode
+                // and therefore fails our color detection logic.
+                headless: false,
+                screenshotFailures: false,
+              },
             ],
           },
         },
