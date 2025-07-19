@@ -5,7 +5,7 @@ export default defineConfig({
     "./src/index.ts",
     "./src/utils.ts",
   ],
-  format: ["cjs", "esm"],
+  format: ["esm"],
   platform: "node",
   target: "es2022",
   dts: true,
