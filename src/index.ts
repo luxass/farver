@@ -28,7 +28,6 @@ interface Farver {
   cyan: ChainedFarve;
   white: ChainedFarve;
   gray: ChainedFarve;
-  blackBright: ChainedFarve;
   redBright: ChainedFarve;
   greenBright: ChainedFarve;
   yellowBright: ChainedFarve;
@@ -47,7 +46,6 @@ interface Farver {
   bgCyan: ChainedFarve;
   bgWhite: ChainedFarve;
   bgGray: ChainedFarve;
-  bgBlackBright: ChainedFarve;
   bgRedBright: ChainedFarve;
   bgGreenBright: ChainedFarve;
   bgYellowBright: ChainedFarve;
@@ -136,7 +134,6 @@ export function createColors(colorSpace: ColorSpace = getColorSpace()): Farver {
     cyan: wrap(36, 39),
     white: wrap(37, 39),
     gray: wrap(90, 39),
-    blackBright: wrap(90, 39),
     redBright: wrap(91, 39),
     greenBright: wrap(92, 39),
     yellowBright: wrap(93, 39),
@@ -154,7 +151,6 @@ export function createColors(colorSpace: ColorSpace = getColorSpace()): Farver {
     bgCyan: wrap(46, 49),
     bgWhite: wrap(47, 49),
     bgGray: wrap(100, 49),
-    bgBlackBright: wrap(100, 49),
     bgRedBright: wrap(101, 49),
     bgGreenBright: wrap(102, 49),
     bgYellowBright: wrap(103, 49),
@@ -232,7 +228,6 @@ const {
   cyan,
   white,
   gray,
-  blackBright,
   redBright,
   greenBright,
   yellowBright,
@@ -256,7 +251,6 @@ const {
   bgMagentaBright,
   bgCyanBright,
   bgWhiteBright,
-  bgBlackBright,
   hex,
   bg,
   bgHex,
@@ -276,7 +270,6 @@ export const foregroundColors = {
   cyan,
   white,
   gray,
-  blackBright,
   redBright,
   greenBright,
   yellowBright,
@@ -303,7 +296,6 @@ export const backgroundColors = {
   bgMagentaBright,
   bgCyanBright,
   bgWhiteBright,
-  bgBlackBright,
 };
 
 export const utilities = {
@@ -322,7 +314,6 @@ export const utilities = {
 export {
   bg,
   bgBlack,
-  bgBlackBright,
   bgBlue,
   bgBlueBright,
   bgCyan,
@@ -341,7 +332,6 @@ export {
   bgYellow,
   bgYellowBright,
   black,
-  blackBright,
   blue,
   blueBright,
   bold,
