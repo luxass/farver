@@ -32,7 +32,7 @@ describe("Deno Integration Tests", () => {
   });
 
   it("should import supports module correctly", async () => {
-    const supports = await import("../src/supports.ts");
+    const supports = await import("termenv/supports");
 
     expect(typeof supports.getColorSpace).toBe("function");
     expect(typeof supports.isColorsSupported).toBe("function");
@@ -60,7 +60,7 @@ describe("Deno Integration Tests", () => {
   it("should work with Deno's module resolution", async () => {
     const farver = await import("../src/index.ts");
     const utils = await import("../src/utils.ts");
-    const supports = await import("../src/supports.ts");
+    const supports = await import("termenv/supports");
 
     expect(farver).toBeDefined();
     expect(utils).toBeDefined();
@@ -107,7 +107,7 @@ it({
     expect(utils.ansi256To16(196)).toBe(91);
 
     const farver = await import("../src/index.ts");
-    const supports = await import("../src/supports.ts");
+    const supports = await import("termenv/supports");
 
     expect(farver).toBeDefined();
     expect(supports).toBeDefined();

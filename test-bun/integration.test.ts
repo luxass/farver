@@ -29,7 +29,7 @@ describe("Bun Integration Tests", () => {
   });
 
   it("should import supports module correctly", async () => {
-    const supports = await import("../src/supports.ts");
+    const supports = await import("termenv/supports");
 
     expect(typeof supports.getColorSpace).toBe("function");
     expect(typeof supports.isColorsSupported).toBe("function");
@@ -58,7 +58,7 @@ describe("Bun Integration Tests", () => {
   it("should work with Bun's module resolution", async () => {
     const farver = await import("../src/index.ts");
     const utils = await import("../src/utils.ts");
-    const supports = await import("../src/supports.ts");
+    const supports = await import("termenv/supports");
 
     expect(farver).toBeDefined();
     expect(utils).toBeDefined();
