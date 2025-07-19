@@ -58,8 +58,11 @@
     "build": "tsdown",
     "dev": "tsdown --watch",
     "lint": "eslint .",
+    "playground": "tsx playground.ts",
     "test": "vitest --run",
     "test:watch": "vitest",
+    "test:bun": "bun test ./test-bun",
+    "test:deno": "deno test --allow-env",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -76,6 +79,7 @@
     "playwright": "^1.54.1",
     "publint": "^0.3.12",
     "tsdown": "^0.12.9",
+    "tsx": "^4.20.3",
     "typescript": "^5.8.3",
     "vitest": "^3.2.4"
   },
