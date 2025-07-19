@@ -35,10 +35,6 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./supports": {
-      "import": "./dist/supports.js",
-      "require": "./dist/supports.cjs"
-    },
     "./utils": {
       "import": "./dist/utils.js",
       "require": "./dist/utils.cjs"
