@@ -10,7 +10,7 @@ describe("browser integration tests", () => {
   });
 
   it("should always support true colors", async () => {
-    const supports = await import("../../src/supports.ts");
+    const supports = await import("termenv/supports");
     const env = await import("termenv").then((m) => m.getTerminalEnvironment());
     expect(supports).toBeDefined();
 
@@ -52,7 +52,7 @@ describe("browser integration tests", () => {
 
   it("should work with different color spaces in browser", async () => {
     const farver = await import("../../src/index.ts");
-    const supports = await import("../../src/supports.ts");
+    const supports = await import("termenv/supports");
     const colors16 = farver.createColors(supports.SPACE_16_COLORS);
     const colors256 = farver.createColors(supports.SPACE_256_COLORS);
 
