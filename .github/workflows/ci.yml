@@ -9,6 +9,7 @@ on:
       - opened
       - synchronize
 
+permissions: {}
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
@@ -67,23 +68,24 @@ jobs:
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: ${{ matrix.node }}
+          cache: pnpm
 
       - name: install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: setup playwright
-        run: pnpm exec playwright install
-
       - name: build
         run: pnpm build
 
-      - name: test
-        if: matrix.os != 'ubuntu-latest'
-        run: pnpm test
+      - name: test (unit)
+        run: pnpm test --project unit
 
-      - name: test
+      - name: install chromium through playwright
         if: matrix.os == 'ubuntu-latest'
-        run: xvfb-run pnpm test
+        run: pnpm exec playwright install chromium
+
+      - name: test (browser)
+        if: matrix.os == 'ubuntu-latest'
+        run: xvfb-run pnpm test --project browser
 
   deno:
     name: test-deno
@@ -103,7 +105,7 @@ jobs:
         with:
           deno-version: ${{ matrix.deno-version }}
 
-      - name: install deno dependencies
+      - name: install dependencies
         run: deno install
 
       - name: run deno test
@@ -130,7 +132,7 @@ jobs:
           bun-version: ${{ matrix.bun-version }}
           no-cache: true
 
-      - name: install
+      - name: install dependencies
         run: bun install
 
       - name: run bun test
