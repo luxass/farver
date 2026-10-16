@@ -1,3 +1,29 @@
-onlyBuiltDependencies:
-  - playwright
-  - esbuild
+ignoreScripts: true
+minimumReleaseAge: 7200
+trustPolicy: no-downgrade
+catalogMode: prefer
+strictDepBuilds: true
+blockExoticSubdeps: true
+
+catalogs:
+  runtime:
+    termenv: 1.0.5
+
+  dev:
+    oxfmt: 0.72.0
+    oxlint: 1.87.0
+    oxlint-tsgolint: 7.0.2004
+    publint: 0.3.25
+    tsdown: 0.23.1
+    tsx: 4.20.3
+    typescript: 7.0.2
+
+  testing:
+    "@vitest/browser-playwright": 5.0.3
+    "@vitest/coverage-v8": 5.0.3
+    playwright: 1.55.1
+    vitest: 5.0.3
+
+  types:
+    "@types/bun": 1.2.19
+    "@types/node": 26.6.5

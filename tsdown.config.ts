@@ -7,7 +7,7 @@ export default defineConfig({
   ],
   format: ["esm"],
   platform: "node",
-  target: "es2022",
+  target: "node24",
   dts: true,
   clean: true,
   exports: true,

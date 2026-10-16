@@ -46,7 +46,6 @@ export const FMT = {
 
 export const TrueColorFns = ["rgb", "hex", "bgRgb", "bgHex", "fg", "bg"];
 
-// eslint-disable-next-line node/prefer-global/process
 export const ansiLog = ((globalThis as any).process ?? {})?.env?.FARVER_SHOW ? console.error : () => {};
 
 export function getAnsi(text: string, ansi: keyof typeof FMT): string {

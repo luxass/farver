@@ -37,7 +37,8 @@
   "publish": {
     "exclude": [
       "tsdown.config.ts",
-      "eslint.config.js",
+      "oxlint.config.ts",
+      "oxfmt.config.ts",
       "pnpm-lock.yaml",
       ".github/**",
       "scripts/**",
