@@ -13,7 +13,7 @@ import farver, {
   white,
   yellow,
   yellowBright,
-} from "./src";
+} from "farver";
 
 console.log(`Color Space: ${getColorSpace()}\n`);
 console.log(`Runtime: ${getTerminalEnvironment().isTTY}\n`);

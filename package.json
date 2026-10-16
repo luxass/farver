@@ -51,11 +51,10 @@
     "lint:fix": "oxlint --fix",
     "fmt": "oxfmt",
     "fmt:check": "oxfmt --check",
-    "playground": "tsx playground.ts",
+    "playground": "pnpm build && node playground.ts",
     "test": "vitest --run",
     "test:watch": "vitest",
     "test:bun": "bun test ./test-bun",
-    "test:deno": "deno test --allow-env",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -72,7 +71,6 @@
     "playwright": "catalog:testing",
     "publint": "catalog:dev",
     "tsdown": "catalog:dev",
-    "tsx": "catalog:dev",
     "typescript": "catalog:dev",
     "vitest": "catalog:testing"
   }

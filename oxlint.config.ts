@@ -32,7 +32,7 @@ export default defineConfig({
       },
     },
     {
-      files: ["test/**/*", "test-bun/**/*", "test-deno/**/*"],
+      files: ["test/**/*", "test-bun/**/*"],
       rules: {
         "eslint/max-lines": "off",
         "eslint/max-lines-per-function": "off",
