@@ -1,10 +1,9 @@
 import type { ColorSpace } from "termenv/supports";
 import { getColorSpace } from "termenv/supports";
+
 import { ansi256To16, hexToRgb, rgbToAnsi16, rgbToAnsi256 } from "./utils";
 
-export type Farve = (
-  text: string | boolean | number | null | undefined,
-) => string;
+export type Farve = (text: string | boolean | number | null | undefined) => string;
 
 interface Farver {
   // modifiers
@@ -67,10 +66,7 @@ export type ChainedFarve = Farve & Farver;
 
 function createWrap(colorSpace: ColorSpace, colors: Farver) {
   const enabled = colorSpace > 0;
-  return function wrap(
-    start: number | string,
-    end: number | string,
-  ): ChainedFarve {
+  return function wrap(start: number | string, end: number | string): ChainedFarve {
     if (!enabled) {
       return chain((text) => `${text}`, colors) as ChainedFarve;
     }
@@ -97,18 +93,15 @@ export function createColors(colorSpace: ColorSpace = getColorSpace()): Farver {
   const colors: Farver = {} as Farver;
   const wrap = createWrap(colorSpace, colors);
 
-  let rgb = (r: number, g: number, b: number): ChainedFarve =>
-    wrap(`38;2;${r};${g};${b}`, 39);
-  let bgRgb = (r: number, g: number, b: number): ChainedFarve =>
-    wrap(`48;2;${r};${g};${b}`, 49);
+  let rgb = (r: number, g: number, b: number): ChainedFarve => wrap(`38;2;${r};${g};${b}`, 39);
+  let bgRgb = (r: number, g: number, b: number): ChainedFarve => wrap(`48;2;${r};${g};${b}`, 49);
   let fg = (code: number): ChainedFarve => wrap(`38;5;${code}`, 39);
   let bg = (code: number): ChainedFarve => wrap(`48;5;${code}`, 49);
   if (colorSpace === 1) {
     fg = (code: number) => wrap(ansi256To16(code), 39);
     bg = (code: number) => wrap(ansi256To16(code) + 10, 49);
     rgb = (r: number, g: number, b: number) => wrap(rgbToAnsi16(r, g, b), 39);
-    bgRgb = (r: number, g: number, b: number) =>
-      wrap(rgbToAnsi16(r, g, b) + 10, 49);
+    bgRgb = (r: number, g: number, b: number) => wrap(rgbToAnsi16(r, g, b) + 10, 49);
   } else if (colorSpace === 2) {
     rgb = (r: number, g: number, b: number) => fg(rgbToAnsi256(r, g, b));
     bgRgb = (r: number, g: number, b: number) => bg(rgbToAnsi256(r, g, b));
@@ -180,12 +173,12 @@ function chain(farve: Farve, currentColors: Farver): Farve {
         const value = currentColors[prop as keyof Farver];
 
         if (
-          prop === "rgb"
-          || prop === "bgRgb"
-          || prop === "fg"
-          || prop === "bg"
-          || prop === "hex"
-          || prop === "bgHex"
+          prop === "rgb" ||
+          prop === "bgRgb" ||
+          prop === "fg" ||
+          prop === "bg" ||
+          prop === "hex" ||
+          prop === "bgHex"
         ) {
           return (...args: number[]) =>
             chain((text) => {

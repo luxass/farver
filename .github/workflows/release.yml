@@ -26,7 +26,7 @@ jobs:
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           registry-url: "https://registry.npmjs.org"
-          node-version: lts/*
+          node-version: "24"
 
       - name: update npm (oidc)
         run: npm install -g npm@latest
@@ -58,9 +58,6 @@ jobs:
         env:
           TAG: ${{ steps.tag.outputs.tag }}
           NPM_CONFIG_PROVENANCE: true
-
-      - name: publish to jsr
-        run: npx jsr publish --allow-slow-types --allow-dirty
 
       - name: print dirty files
         run: git status --porcelain

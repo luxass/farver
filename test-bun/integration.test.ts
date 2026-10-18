@@ -1,4 +1,5 @@
 import { describe, expect, it } from "bun:test";
+
 import { escapeAnsi } from "../test/shared.ts";
 
 describe("Bun Integration Tests", () => {

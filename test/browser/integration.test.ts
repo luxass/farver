@@ -1,6 +1,7 @@
-/// <reference types="@vitest/browser/providers/playwright" />
+/// <reference types="@vitest/browser-playwright" />
 
 import { describe, expect, it } from "vitest";
+
 import { escapeAnsi } from "../shared";
 
 describe("browser integration tests", () => {
@@ -47,7 +48,7 @@ describe("browser integration tests", () => {
 
     document.body.appendChild(element);
 
-    expect.toContainElement(element);
+    await expect.element(document.body).toContainElement(element);
   });
 
   it("should work with different color spaces in browser", async () => {
