@@ -9,6 +9,10 @@
     ],
     "module": "ESNext",
     "moduleResolution": "Bundler",
+    "paths": {
+      "farver": ["./src/index"],
+      "farver/*": ["./src/*"]
+    },
     "resolveJsonModule": true,
     "types": [
       "node"
@@ -20,11 +24,11 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "verbatimModuleSyntax": true,
-    "skipDefaultLibCheck": true,
     "skipLibCheck": true
   },
   "include": [
-    "src"
+    "src",
+    "playground.ts"
   ],
   "exclude": ["node_modules", "dist"]
 }
