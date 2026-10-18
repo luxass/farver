@@ -11,25 +11,15 @@ export default defineConfig({
       {
         test: {
           name: "unit",
-          exclude: [
-            "test-bun/**/*.test.ts",
-            "test/browser/**.test.ts",
-            ...defaultExclude,
-          ],
+          exclude: ["test-bun/**/*.test.ts", "test/browser/**.test.ts", ...defaultExclude],
           environment: "node",
         },
       },
       {
         test: {
           name: "browser",
-          exclude: [
-            "test-bun/**/*.test.ts",
-            "test/*.test.ts",
-            ...defaultExclude,
-          ],
-          include: [
-            "test/browser/**/*.test.ts",
-          ],
+          exclude: ["test-bun/**/*.test.ts", "test/*.test.ts", ...defaultExclude],
+          include: ["test/browser/**/*.test.ts"],
           browser: {
             enabled: true,
             provider: playwright(),

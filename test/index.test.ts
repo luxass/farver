@@ -1,9 +1,6 @@
-import {
-  SPACE_16_COLORS,
-  SPACE_256_COLORS,
-  SPACE_MONO,
-} from "termenv/supports";
+import { SPACE_16_COLORS, SPACE_256_COLORS, SPACE_MONO } from "termenv/supports";
 import { describe, expect, it } from "vitest";
+
 import {
   bgBlack,
   bgBlue,
@@ -93,9 +90,7 @@ it("handle numbers", () => {
 });
 
 it("handle nullish values", () => {
-  expect(bgGreen(undefined)).toBe(
-    `${FMT.bgGreen[0]}undefined${FMT.bgGreen[1]}`,
-  );
+  expect(bgGreen(undefined)).toBe(`${FMT.bgGreen[0]}undefined${FMT.bgGreen[1]}`);
   expect(bgBlue(null)).toBe(`${FMT.bgBlue[0]}null${FMT.bgBlue[1]}`);
 });
 
@@ -137,17 +132,9 @@ describe("colors disabled", () => {
     ["gray", COLORS_DISABLED.gray, ["\u001B[90m", "\u001B[39m"]],
     ["redBright", COLORS_DISABLED.redBright, ["\u001B[91m", "\u001B[39m"]],
     ["greenBright", COLORS_DISABLED.greenBright, ["\u001B[92m", "\u001B[39m"]],
-    [
-      "yellowBright",
-      COLORS_DISABLED.yellowBright,
-      ["\u001B[93m", "\u001B[39m"],
-    ],
+    ["yellowBright", COLORS_DISABLED.yellowBright, ["\u001B[93m", "\u001B[39m"]],
     ["blueBright", COLORS_DISABLED.blueBright, ["\u001B[94m", "\u001B[39m"]],
-    [
-      "magentaBright",
-      COLORS_DISABLED.magentaBright,
-      ["\u001B[95m", "\u001B[39m"],
-    ],
+    ["magentaBright", COLORS_DISABLED.magentaBright, ["\u001B[95m", "\u001B[39m"]],
     ["cyanBright", COLORS_DISABLED.cyanBright, ["\u001B[96m", "\u001B[39m"]],
     ["whiteBright", COLORS_DISABLED.whiteBright, ["\u001B[97m", "\u001B[39m"]],
     ["bgBlack", COLORS_DISABLED.bgBlack, ["\u001B[40m", "\u001B[49m"]],
@@ -160,42 +147,16 @@ describe("colors disabled", () => {
     ["bgWhite", COLORS_DISABLED.bgWhite, ["\u001B[47m", "\u001B[49m"]],
     ["bgGray", COLORS_DISABLED.bgGray, ["\u001B[100m", "\u001B[49m"]],
     ["bgRedBright", COLORS_DISABLED.bgRedBright, ["\u001B[101m", "\u001B[49m"]],
-    [
-      "bgGreenBright",
-      COLORS_DISABLED.bgGreenBright,
-      ["\u001B[102m", "\u001B[49m"],
-    ],
-    [
-      "bgYellowBright",
-      COLORS_DISABLED.bgYellowBright,
-      ["\u001B[103m", "\u001B[49m"],
-    ],
-    [
-      "bgBlueBright",
-      COLORS_DISABLED.bgBlueBright,
-      ["\u001B[104m", "\u001B[49m"],
-    ],
-    [
-      "bgMagentaBright",
-      COLORS_DISABLED.bgMagentaBright,
-      ["\u001B[105m", "\u001B[49m"],
-    ],
-    [
-      "bgCyanBright",
-      COLORS_DISABLED.bgCyanBright,
-      ["\u001B[106m", "\u001B[49m"],
-    ],
-    [
-      "bgWhiteBright",
-      COLORS_DISABLED.bgWhiteBright,
-      ["\u001B[107m", "\u001B[49m"],
-    ],
+    ["bgGreenBright", COLORS_DISABLED.bgGreenBright, ["\u001B[102m", "\u001B[49m"]],
+    ["bgYellowBright", COLORS_DISABLED.bgYellowBright, ["\u001B[103m", "\u001B[49m"]],
+    ["bgBlueBright", COLORS_DISABLED.bgBlueBright, ["\u001B[104m", "\u001B[49m"]],
+    ["bgMagentaBright", COLORS_DISABLED.bgMagentaBright, ["\u001B[105m", "\u001B[49m"]],
+    ["bgCyanBright", COLORS_DISABLED.bgCyanBright, ["\u001B[106m", "\u001B[49m"]],
+    ["bgWhiteBright", COLORS_DISABLED.bgWhiteBright, ["\u001B[107m", "\u001B[49m"]],
   ])("expect color %s to match their ansi color", (colorName, color, ansi) => {
     const received = color(colorName);
 
-    expect(escapeAnsi(received)).not.toBe(
-      escapeAnsi(`${ansi[0]}${colorName}${ansi[1]}`),
-    );
+    expect(escapeAnsi(received)).not.toBe(escapeAnsi(`${ansi[0]}${colorName}${ansi[1]}`));
     expect(received).toBe(colorName);
   });
 });
@@ -208,17 +169,9 @@ describe("should downscale true colors", () => {
       ["hex(#1BE011) -> green", colors.hex("#1BE011"), colors.green],
       ["hex(#11D9C2) -> cyan", colors.hex("#11D9C2"), colors.cyan],
       ["hex(#C511D9) -> magenta", colors.hex("#C511D9"), colors.magenta],
-      [
-        "hex(#6614F6) -> magentaBright",
-        colors.hex("#8c4dfa"),
-        colors.magentaBright,
-      ],
+      ["hex(#6614F6) -> magentaBright", colors.hex("#8c4dfa"), colors.magentaBright],
       ["hex(#1157D9) -> blue", colors.hex("#1157D9"), colors.blue],
-      [
-        "hex(#39ed2f) -> greenBright",
-        colors.hex("#39ed2f"),
-        colors.greenBright,
-      ],
+      ["hex(#39ed2f) -> greenBright", colors.hex("#39ed2f"), colors.greenBright],
 
       // grayscale hex
       ["hex(#000000) -> black", colors.hex("#000000"), colors.black],
@@ -227,39 +180,15 @@ describe("should downscale true colors", () => {
 
       // rgb
       ["rgb(255, 0, 0) -> redBright", colors.rgb(255, 0, 0), colors.redBright],
-      [
-        "rgb(0, 255, 0) -> greenBright",
-        colors.rgb(0, 255, 0),
-        colors.greenBright,
-      ],
-      [
-        "rgb(0, 0, 255) -> blueBright",
-        colors.rgb(0, 0, 255),
-        colors.blueBright,
-      ],
-      [
-        "rgb(255, 255, 0) -> yellowBright",
-        colors.rgb(255, 255, 0),
-        colors.yellowBright,
-      ],
-      [
-        "rgb(255, 0, 255) -> magentaBright",
-        colors.rgb(255, 0, 255),
-        colors.magentaBright,
-      ],
-      [
-        "rgb(0, 255, 255) -> cyanBright",
-        colors.rgb(0, 255, 255),
-        colors.cyanBright,
-      ],
+      ["rgb(0, 255, 0) -> greenBright", colors.rgb(0, 255, 0), colors.greenBright],
+      ["rgb(0, 0, 255) -> blueBright", colors.rgb(0, 0, 255), colors.blueBright],
+      ["rgb(255, 255, 0) -> yellowBright", colors.rgb(255, 255, 0), colors.yellowBright],
+      ["rgb(255, 0, 255) -> magentaBright", colors.rgb(255, 0, 255), colors.magentaBright],
+      ["rgb(0, 255, 255) -> cyanBright", colors.rgb(0, 255, 255), colors.cyanBright],
 
       // grayscale rgb
       ["rgb(0, 0, 0) -> black", colors.rgb(0, 0, 0), colors.black],
-      [
-        "rgb(255, 255, 255) -> white",
-        colors.rgb(255, 255, 255),
-        colors.whiteBright,
-      ],
+      ["rgb(255, 255, 255) -> white", colors.rgb(255, 255, 255), colors.whiteBright],
       ["rgb(128, 128, 128) -> white", colors.rgb(128, 128, 128), colors.white],
     ])("ansi16 foreground (%s)", (_name, truecolorFn, ansiFn) => {
       const received = truecolorFn("foreground");
@@ -271,76 +200,28 @@ describe("should downscale true colors", () => {
     it.each([
       ["bgHex(#1BE011) -> bgGreen", colors.bgHex("#1BE011"), colors.bgGreen],
       ["bgHex(#11D9C2) -> bgCyan", colors.bgHex("#11D9C2"), colors.bgCyan],
-      [
-        "bgHex(#C511D9) -> bgMagenta",
-        colors.bgHex("#C511D9"),
-        colors.bgMagenta,
-      ],
-      [
-        "bgHex(#6614F6) -> bgMagentaBright",
-        colors.bgHex("#8c4dfa"),
-        colors.bgMagentaBright,
-      ],
+      ["bgHex(#C511D9) -> bgMagenta", colors.bgHex("#C511D9"), colors.bgMagenta],
+      ["bgHex(#6614F6) -> bgMagentaBright", colors.bgHex("#8c4dfa"), colors.bgMagentaBright],
       ["bgHex(#1157D9) -> bgBlue", colors.bgHex("#1157D9"), colors.bgBlue],
-      [
-        "bgHex(#39ed2f) -> bgGreenBright",
-        colors.bgHex("#39ed2f"),
-        colors.bgGreenBright,
-      ],
+      ["bgHex(#39ed2f) -> bgGreenBright", colors.bgHex("#39ed2f"), colors.bgGreenBright],
 
       // grayscale hex
       ["bgHex(#000000) -> bgBlack", colors.bgHex("#000000"), colors.bgBlack],
-      [
-        "bgHex(#ffffff) -> bgWhite",
-        colors.bgHex("#ffffff"),
-        colors.bgWhiteBright,
-      ],
+      ["bgHex(#ffffff) -> bgWhite", colors.bgHex("#ffffff"), colors.bgWhiteBright],
       ["bgHex(#808080) -> bgWhite", colors.bgHex("#808080"), colors.bgWhite],
 
       // rgb
-      [
-        "bgRgb(255, 0, 0) -> bgRedBright",
-        colors.bgRgb(255, 0, 0),
-        colors.bgRedBright,
-      ],
-      [
-        "bgRgb(0, 255, 0) -> bgGreenBright",
-        colors.bgRgb(0, 255, 0),
-        colors.bgGreenBright,
-      ],
-      [
-        "bgRgb(0, 0, 255) -> bgBlueBright",
-        colors.bgRgb(0, 0, 255),
-        colors.bgBlueBright,
-      ],
-      [
-        "bgRgb(255, 255, 0) -> bgYellowBright",
-        colors.bgRgb(255, 255, 0),
-        colors.bgYellowBright,
-      ],
-      [
-        "bgRgb(255, 0, 255) -> bgMagentaBright",
-        colors.bgRgb(255, 0, 255),
-        colors.bgMagentaBright,
-      ],
-      [
-        "bgRgb(0, 255, 255) -> bgCyanBright",
-        colors.bgRgb(0, 255, 255),
-        colors.bgCyanBright,
-      ],
+      ["bgRgb(255, 0, 0) -> bgRedBright", colors.bgRgb(255, 0, 0), colors.bgRedBright],
+      ["bgRgb(0, 255, 0) -> bgGreenBright", colors.bgRgb(0, 255, 0), colors.bgGreenBright],
+      ["bgRgb(0, 0, 255) -> bgBlueBright", colors.bgRgb(0, 0, 255), colors.bgBlueBright],
+      ["bgRgb(255, 255, 0) -> bgYellowBright", colors.bgRgb(255, 255, 0), colors.bgYellowBright],
+      ["bgRgb(255, 0, 255) -> bgMagentaBright", colors.bgRgb(255, 0, 255), colors.bgMagentaBright],
+      ["bgRgb(0, 255, 255) -> bgCyanBright", colors.bgRgb(0, 255, 255), colors.bgCyanBright],
 
       // grayscale rgb
       ["bgRgb(0, 0, 0) -> bgBlack", colors.bgRgb(0, 0, 0), colors.bgBlack],
-      [
-        "bgRgb(255, 255, 255) -> bgWhite",
-        colors.bgRgb(255, 255, 255),
-        colors.bgWhiteBright,
-      ],
-      [
-        "bgRgb(128, 128, 128) -> bgWhite",
-        colors.bgRgb(128, 128, 128),
-        colors.bgWhite,
-      ],
+      ["bgRgb(255, 255, 255) -> bgWhite", colors.bgRgb(255, 255, 255), colors.bgWhiteBright],
+      ["bgRgb(128, 128, 128) -> bgWhite", colors.bgRgb(128, 128, 128), colors.bgWhite],
     ])("ansi16 background (%s)", (_name, truecolorFn, ansiFn) => {
       const received = truecolorFn("background");
       const expected = ansiFn("background");
@@ -360,11 +241,9 @@ describe("should downscale true colors", () => {
     it("handle deep nested colors", () => {
       const colors = createColors(SPACE_16_COLORS);
 
-      const received = colors
-        .bgHex("#1BE011")
-        .hex("#11D9C2")
-        .bgRgb(0, 255, 0)
-        .hex("#C511D9")("deep nested");
+      const received = colors.bgHex("#1BE011").hex("#11D9C2").bgRgb(0, 255, 0).hex("#C511D9")(
+        "deep nested",
+      );
       const expected = colors.bgGreen.cyan.bgGreenBright.magenta("deep nested");
 
       expect(escapeAnsi(received)).toBe(escapeAnsi(expected));
@@ -397,16 +276,8 @@ describe("should downscale true colors", () => {
 
       // grayscale rgb
       ["rgb(0, 0, 0) -> fg(16)", colors.rgb(0, 0, 0), colors.fg(16)],
-      [
-        "rgb(255, 255, 255) -> fg(231)",
-        colors.rgb(255, 255, 255),
-        colors.fg(231),
-      ],
-      [
-        "rgb(128, 128, 128) -> fg(244)",
-        colors.rgb(128, 128, 128),
-        colors.fg(244),
-      ],
+      ["rgb(255, 255, 255) -> fg(231)", colors.rgb(255, 255, 255), colors.fg(231)],
+      ["rgb(128, 128, 128) -> fg(244)", colors.rgb(128, 128, 128), colors.fg(244)],
     ])("ansi256 foreground (%s)", (_name, truecolorFn, ansiFn) => {
       const received = truecolorFn("foreground");
       const expected = ansiFn("foreground");
@@ -431,34 +302,14 @@ describe("should downscale true colors", () => {
       ["bgRgb(255, 0, 0) -> bg(196)", colors.bgRgb(255, 0, 0), colors.bg(196)],
       ["bgRgb(0, 255, 0) -> bg(46)", colors.bgRgb(0, 255, 0), colors.bg(46)],
       ["bgRgb(0, 0, 255) -> bg(21)", colors.bgRgb(0, 0, 255), colors.bg(21)],
-      [
-        "bgRgb(255, 255, 0) -> bg(226)",
-        colors.bgRgb(255, 255, 0),
-        colors.bg(226),
-      ],
-      [
-        "bgRgb(255, 0, 255) -> bg(201)",
-        colors.bgRgb(255, 0, 255),
-        colors.bg(201),
-      ],
-      [
-        "bgRgb(0, 255, 255) -> bg(51)",
-        colors.bgRgb(0, 255, 255),
-        colors.bg(51),
-      ],
+      ["bgRgb(255, 255, 0) -> bg(226)", colors.bgRgb(255, 255, 0), colors.bg(226)],
+      ["bgRgb(255, 0, 255) -> bg(201)", colors.bgRgb(255, 0, 255), colors.bg(201)],
+      ["bgRgb(0, 255, 255) -> bg(51)", colors.bgRgb(0, 255, 255), colors.bg(51)],
 
       // grayscale rgb
       ["bgRgb(0, 0, 0) -> bg(16)", colors.bgRgb(0, 0, 0), colors.bg(16)],
-      [
-        "bgRgb(255, 255, 255) -> bg(231)",
-        colors.bgRgb(255, 255, 255),
-        colors.bg(231),
-      ],
-      [
-        "bgRgb(128, 128, 128) -> bg(244)",
-        colors.bgRgb(128, 128, 128),
-        colors.bg(244),
-      ],
+      ["bgRgb(255, 255, 255) -> bg(231)", colors.bgRgb(255, 255, 255), colors.bg(231)],
+      ["bgRgb(128, 128, 128) -> bg(244)", colors.bgRgb(128, 128, 128), colors.bg(244)],
     ])("ansi256 background (%s)", (_name, truecolorFn, ansiFn) => {
       const received = truecolorFn("background");
       const expected = ansiFn("background");
@@ -478,11 +329,9 @@ describe("should downscale true colors", () => {
     it("handle deep nested colors", () => {
       const colors = createColors(SPACE_256_COLORS);
 
-      const received = colors
-        .bgHex("#1BE011")
-        .hex("#11D9C2")
-        .bgRgb(0, 255, 0)
-        .hex("#C511D9")("deep nested");
+      const received = colors.bgHex("#1BE011").hex("#11D9C2").bgRgb(0, 255, 0).hex("#C511D9")(
+        "deep nested",
+      );
       const expected = colors.bg(76).fg(44).bg(46).fg(164)("deep nested");
 
       expect(escapeAnsi(received)).toBe(escapeAnsi(expected));

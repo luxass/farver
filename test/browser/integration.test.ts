@@ -1,6 +1,7 @@
 /// <reference types="@vitest/browser-playwright" />
 
 import { describe, expect, it } from "vitest";
+
 import { escapeAnsi } from "../shared";
 
 describe("browser integration tests", () => {

@@ -1,6 +1,3 @@
-import { getTerminalEnvironment } from "termenv";
-import { getColorSpace } from "termenv/supports";
-
 import farver, {
   blue,
   cyan,
@@ -14,6 +11,8 @@ import farver, {
   yellow,
   yellowBright,
 } from "farver";
+import { getTerminalEnvironment } from "termenv";
+import { getColorSpace } from "termenv/supports";
 
 console.log(`Color Space: ${getColorSpace()}\n`);
 console.log(`Runtime: ${getTerminalEnvironment().isTTY}\n`);
@@ -31,9 +30,7 @@ const hexColors = [
 
 hexColors.forEach((colors) => {
   console.log(colors.map((color) => farver.hex(color)(color)).join(" "));
-  console.log(
-    colors.map((color) => farver.bgHex(color).black(color)).join(" "),
-  );
+  console.log(colors.map((color) => farver.bgHex(color).black(color)).join(" "));
 });
 
 console.log(`\n${inverse(" ANSI 256: ")} \n`);
@@ -45,18 +42,12 @@ console.log(red.bgWhite("FIRST LINE \nSECOND LINE\nTHIRD LINE "));
 
 console.log(`\n${inverse(" Nested Syntax: ")} \n`);
 
-console.log(
-  magenta(
-    `magenta ${underline(`underline ${italic(`italic magenta`)}`)} magenta`,
-  ),
-);
+console.log(magenta(`magenta ${underline(`underline ${italic(`italic magenta`)}`)} magenta`));
 console.log(
   green(
     `green ${red(
       `red ${blue(
-        `blue ${cyan(
-          `cyan ${white.italic.underline(`white italic underline`)} cyan`,
-        )} blue`,
+        `blue ${cyan(`cyan ${white.italic.underline(`white italic underline`)} cyan`)} blue`,
       )} red`,
     )} green`,
   ),

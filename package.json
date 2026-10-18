@@ -2,47 +2,43 @@
   "name": "farver",
   "version": "1.0.0-beta.1",
   "description": "A tiny color library",
-  "type": "module",
+  "keywords": [
+    "ansi",
+    "color",
+    "colors",
+    "colour",
+    "console",
+    "farver",
+    "support",
+    "supports",
+    "terminal",
+    "tty"
+  ],
+  "homepage": "https://github.com/luxass/farver",
+  "bugs": {
+    "url": "https://github.com/luxass/farver/issues"
+  },
+  "license": "MIT",
   "author": {
     "name": "Lucas Nørgård",
     "email": "lucasnrgaard@gmail.com",
     "url": "https://luxass.dev"
   },
-  "packageManager": "pnpm@12.11.2",
-  "license": "MIT",
-  "homepage": "https://github.com/luxass/farver",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/luxass/farver.git"
   },
-  "bugs": {
-    "url": "https://github.com/luxass/farver/issues"
-  },
-  "keywords": [
-    "color",
-    "colour",
-    "colors",
-    "terminal",
-    "console",
-    "ansi",
-    "tty",
-    "support",
-    "supports",
-    "farver"
+  "files": [
+    "dist"
   ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
     "./utils": "./dist/utils.js",
     "./package.json": "./package.json"
-  },
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "engines": {
-    "node": ">=24.11.0"
   },
   "scripts": {
     "build": "tsdown",
@@ -73,5 +69,9 @@
     "tsdown": "catalog:dev",
     "typescript": "catalog:dev",
     "vitest": "catalog:testing"
-  }
+  },
+  "engines": {
+    "node": ">=24.11.0"
+  },
+  "packageManager": "pnpm@12.11.2"
 }

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import { ansi256To16, hexToRgb, rgbToAnsi16, rgbToAnsi256 } from "../src/utils";
 
 describe("convert HEX to RGB", () => {
