@@ -409,3 +409,52 @@ describe("chains whose styles share a close code", () => {
     expect(escapeAnsi(render())).toBe(escapeAnsi(expected));
   });
 });
+
+describe("template literals", () => {
+  const truecolor = createColors(3);
+  const disabled = createColors(SPACE_MONO);
+  const file = "app.ts";
+
+  it("styles the whole text, with the values in place", () => {
+    expect(truecolor.red`Error: ${file} not found`).toBe(
+      `${FMT.red[0]}Error: app.ts not found${FMT.red[1]}`,
+    );
+  });
+
+  it("converts values like a template literal", () => {
+    expect(truecolor.red`${1} ${true} ${null} ${undefined}`).toBe(
+      `${FMT.red[0]}1 true null undefined${FMT.red[1]}`,
+    );
+  });
+
+  it("handles nested templates", () => {
+    expect(truecolor.red`a ${truecolor.green`b`} c`).toBe(
+      truecolor.red(`a ${truecolor.green("b")} c`),
+    );
+  });
+
+  it("applies escapes such as \\n, so line breaks are handled", () => {
+    expect(truecolor.bold`one\ntwo`).toBe(truecolor.bold("one\ntwo"));
+  });
+
+  it("uses the raw text for a string part with an invalid escape", () => {
+    const strings = Object.assign([undefined, " end"], { raw: [String.raw`\unicode`, " end"] });
+    expect(truecolor.red(strings as unknown as TemplateStringsArray, "!")).toBe(
+      `${FMT.red[0]}\\unicode! end${FMT.red[1]}`,
+    );
+  });
+
+  it("works on chains and color functions", () => {
+    expect(truecolor.red.bold`x`).toBe(truecolor.red.bold("x"));
+    expect(truecolor.hex("#ff8800")`x`).toBe(truecolor.hex("#ff8800")("x"));
+  });
+
+  it("gives an empty string for an empty template, and the reset code for reset", () => {
+    expect(truecolor.red``).toBe("");
+    expect(truecolor.reset``).toBe(FMT.reset[0]);
+  });
+
+  it("gives plain text when colors are disabled", () => {
+    expect(disabled.red`plain ${1}`).toBe("plain 1");
+  });
+});
