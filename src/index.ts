@@ -4,7 +4,11 @@ import { getColorSpace } from "termenv/supports";
 import type { StyleCodes } from "./styles";
 import { FIXED_STYLES, getColorFunctions } from "./styles";
 
-export type Farve = (text: string | boolean | number | null | undefined) => string;
+/**
+ * Styles text. Numbers and booleans are converted to text. `undefined`, `null`, and `''` give `''`,
+ * except for `reset()`, which gives the reset code.
+ */
+export type Farve = (text?: string | boolean | number | null) => string;
 
 /**
  * The styles and colors that can be applied and chained, such as `red`, `bold`, or `rgb(255, 136, 0)`.
@@ -86,7 +90,7 @@ interface ChainNode {
 
 const NEWLINE = /(\r?\n)/gu;
 
-function toText(text: Parameters<Farve>[0]): string {
+function toText(text: string | boolean | number): string {
   return typeof text === "string" ? text : `${text}`;
 }
 
@@ -133,8 +137,12 @@ function createStyle(
     closeAll = close + closeAll;
   }
   const inOneStep = !hasOverlappingCodes(chain);
+  // Empty input gives empty output, so nothing is printed. `reset()` alone gives the reset code.
+  const emptyResult =
+    enabled && chain.length === 1 && chain[0] === fixedStyles.reset ? openAll : "";
 
   const style = (text: Parameters<Farve>[0]): string => {
+    if (text === undefined || text === null || text === "") return emptyResult;
     let result = toText(text);
     if (!enabled) return result;
 
