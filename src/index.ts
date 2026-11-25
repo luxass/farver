@@ -3,79 +3,9 @@ import { getColorSpace } from "termenv/supports";
 
 import type { StyleCodes } from "./styles";
 import { FIXED_STYLES, getColorFunctions } from "./styles";
+import type { ChainedFarve, Farver } from "./types";
 
-/**
- * Styles text. Numbers and booleans are converted to text. `undefined`, `null`, and `''` give `''`,
- * except for `reset()`, which gives the reset code.
- *
- * It also works as a template tag: ``red`Error: ${file} not found` `` styles the whole text.
- */
-export interface Farve {
-  (text?: string | boolean | number | null): string;
-  (strings: TemplateStringsArray, ...values: unknown[]): string;
-}
-
-/**
- * The styles and colors that can be applied and chained, such as `red`, `bold`, or `rgb(255, 136, 0)`.
- */
-export interface Farver {
-  // modifiers
-  reset: ChainedFarve;
-  bold: ChainedFarve;
-  dim: ChainedFarve;
-  italic: ChainedFarve;
-  underline: ChainedFarve;
-  overline: ChainedFarve;
-  inverse: ChainedFarve;
-  hidden: ChainedFarve;
-  strikethrough: ChainedFarve;
-
-  // colors
-  black: ChainedFarve;
-  red: ChainedFarve;
-  green: ChainedFarve;
-  yellow: ChainedFarve;
-  blue: ChainedFarve;
-  magenta: ChainedFarve;
-  cyan: ChainedFarve;
-  white: ChainedFarve;
-  gray: ChainedFarve;
-  redBright: ChainedFarve;
-  greenBright: ChainedFarve;
-  yellowBright: ChainedFarve;
-  blueBright: ChainedFarve;
-  magentaBright: ChainedFarve;
-  cyanBright: ChainedFarve;
-  whiteBright: ChainedFarve;
-
-  // background colors
-  bgBlack: ChainedFarve;
-  bgRed: ChainedFarve;
-  bgGreen: ChainedFarve;
-  bgYellow: ChainedFarve;
-  bgBlue: ChainedFarve;
-  bgMagenta: ChainedFarve;
-  bgCyan: ChainedFarve;
-  bgWhite: ChainedFarve;
-  bgGray: ChainedFarve;
-  bgRedBright: ChainedFarve;
-  bgGreenBright: ChainedFarve;
-  bgYellowBright: ChainedFarve;
-  bgBlueBright: ChainedFarve;
-  bgMagentaBright: ChainedFarve;
-  bgCyanBright: ChainedFarve;
-  bgWhiteBright: ChainedFarve;
-
-  // true color
-  rgb: (r: number, g: number, b: number) => ChainedFarve;
-  bgRgb: (r: number, g: number, b: number) => ChainedFarve;
-  fg: (code: number) => ChainedFarve;
-  bg: (code: number) => ChainedFarve;
-  hex: (hex: string) => ChainedFarve;
-  bgHex: (hex: string) => ChainedFarve;
-}
-
-export type ChainedFarve = Farve & Farver;
+export type { ChainedFarve, Farve, Farver, StyleCodesOf } from "./types";
 
 type FixedStyleName = {
   [Name in keyof Farver]: Farver[Name] extends ChainedFarve ? Name : never;
@@ -186,6 +116,10 @@ function createStyle(
     return openAll + result + closeAll;
   };
   Object.setPrototypeOf(style, prototype);
+  Object.defineProperties(style, {
+    open: { value: enabled ? openAll : "" },
+    close: { value: enabled ? closeAll : "" },
+  });
   (style as unknown as ChainNode)[CHAIN] = chain;
   return style as unknown as ChainedFarve;
 }
@@ -235,12 +169,26 @@ export function createColors(colorSpace: ColorSpace = getColorSpace()): Farver {
     );
   }
 
+  Object.defineProperty(prototype, "level", { value: colorSpace });
+
   const colors = Object.create(prototype) as ChainNode;
   colors[CHAIN] = [];
   return colors as unknown as Farver;
 }
 
 export const colors: Farver = createColors();
+
+/**
+ * Removes escape codes, such as colors and styles, from text.
+ *
+ * @example
+ * ```ts
+ * import { red, strip } from "farver";
+ *
+ * strip(red("error")); // "error"
+ * ```
+ */
+export { strip } from "termenv/utils";
 
 export const {
   bg,
