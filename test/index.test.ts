@@ -27,6 +27,7 @@ import {
   gray,
   green,
   greenBright,
+  link,
   magenta,
   magentaBright,
   red,
@@ -514,5 +515,44 @@ describe("strip", () => {
 
   it("leaves plain text alone", () => {
     expect(strip("plain text")).toBe("plain text");
+  });
+});
+
+describe("link", () => {
+  const truecolor = createColors(3);
+  const disabled = createColors(SPACE_MONO);
+  const url = "https://github.com/luxass/farver";
+
+  it("creates an OSC 8 hyperlink", () => {
+    expect(truecolor.link(url, "farver")).toBe(`\u001B]8;;${url}\u001B\\farver\u001B]8;;\u001B\\`);
+  });
+
+  it("shows the URL when there's no text", () => {
+    expect(strip(truecolor.link(url))).toBe(url);
+  });
+
+  it("keeps styled text and strips to the plain text", () => {
+    const styled = truecolor.link(url, truecolor.blue.underline("farver"));
+    expect(styled).toContain(truecolor.blue.underline("farver"));
+    expect(strip(styled)).toBe("farver");
+  });
+
+  it("gives the text and the URL as plain text when colors are disabled", () => {
+    expect(disabled.link(url, "farver")).toBe(`farver (${url})`);
+    expect(disabled.link(url)).toBe(url);
+    expect(disabled.link(url, url)).toBe(url);
+  });
+
+  it("rejects a URL with control characters at every color level", () => {
+    for (const colors of [truecolor, disabled]) {
+      expect(() => colors.link(`${url}\u001B]8;;evil`, "x")).toThrow(
+        new TypeError("link: url must not contain control characters"),
+      );
+    }
+  });
+
+  it("is a named export that uses the detected level", () => {
+    // The tests set FORCE_COLOR=3, so the named export creates hyperlinks.
+    expect(link(url, "farver")).toBe(truecolor.link(url, "farver"));
   });
 });

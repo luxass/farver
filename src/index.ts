@@ -1,5 +1,6 @@
 import type { ColorSpace } from "termenv/supports";
 import { getColorSpace } from "termenv/supports";
+import { hyperlink } from "termenv/utils";
 
 import type { StyleCodes } from "./styles";
 import { FIXED_STYLES, getColorFunctions } from "./styles";
@@ -143,6 +144,23 @@ function defineCachedGetter(
 }
 
 /**
+ * Creates the link function. With colors disabled, the URL is kept as plain text.
+ */
+// C0 controls, DEL, and C1 controls. In a URL, they could end the hyperlink or inject another sequence.
+// oxlint-disable-next-line no-control-regex -- The pattern matches control characters on purpose.
+const CONTROL_CHARACTERS = /[\u0000-\u001F\u007F-\u009F]/u;
+
+function createLink(enabled: boolean): Farver["link"] {
+  return (url, text = url) => {
+    // Check the URL at every color level, so a link that works with colors also works without them.
+    if (CONTROL_CHARACTERS.test(url))
+      throw new TypeError("link: url must not contain control characters");
+    if (enabled) return hyperlink(url, text);
+    return text === url ? url : `${text} (${url})`;
+  };
+}
+
+/**
  * Creates a set of styles for a color space. Without an argument, the color space is detected.
  *
  * Each style is built the first time it's used and then cached, so chains such as `red.bold.underline`
@@ -170,6 +188,7 @@ export function createColors(colorSpace: ColorSpace = getColorSpace()): Farver {
   }
 
   Object.defineProperty(prototype, "level", { value: colorSpace });
+  Object.defineProperty(prototype, "link", { value: createLink(enabled) });
 
   const colors = Object.create(prototype) as ChainNode;
   colors[CHAIN] = [];
@@ -225,6 +244,7 @@ export const {
   hidden,
   inverse,
   italic,
+  link,
   magenta,
   magentaBright,
   overline,
