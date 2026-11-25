@@ -46,6 +46,8 @@
     "fmt": "oxfmt",
     "fmt:check": "oxfmt --check",
     "playground": "pnpm build && node playground.ts",
+    "bench": "pnpm build && node bench/index.ts",
+    "size": "pnpm build && node bench/size.ts",
     "test": "vitest --run",
     "test:watch": "vitest",
     "test:bun": "bun test ./test-bun",
