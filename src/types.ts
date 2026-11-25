@@ -72,6 +72,19 @@ export interface Farver {
 
   /** The color level these styles use: 0 for no colors, 1 for 16 colors, 2 for 256 colors, 3 for truecolor. */
   readonly level: ColorSpace;
+
+  /**
+   * Creates a terminal hyperlink (OSC 8) that shows `text` and opens `url`. `text` can be styled.
+   *
+   * When colors are disabled, it gives plain text with the URL in parentheses, so the URL isn't lost,
+   * or only the URL when there's no text or the text is the URL.
+   *
+   * @param {string} url - The URL to open. It must not contain control characters.
+   * @param {string} [text=url] - The text to show
+   * @returns {string} The hyperlink
+   * @throws {TypeError} If `url` contains control characters
+   */
+  link: (url: string, text?: string) => string;
 }
 
 /**
