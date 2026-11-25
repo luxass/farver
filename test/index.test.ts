@@ -31,6 +31,7 @@ import {
   magentaBright,
   red,
   redBright,
+  strip,
   white,
   whiteBright,
   yellow,
@@ -456,5 +457,62 @@ describe("template literals", () => {
 
   it("gives plain text when colors are disabled", () => {
     expect(disabled.red`plain ${1}`).toBe("plain 1");
+  });
+});
+
+describe("open and close codes", () => {
+  const truecolor = createColors(3);
+  const ansi256 = createColors(SPACE_256_COLORS);
+  const disabled = createColors(SPACE_MONO);
+
+  it("gives the codes of a style", () => {
+    expect(truecolor.red.open).toBe(FMT.red[0]);
+    expect(truecolor.red.close).toBe(FMT.red[1]);
+  });
+
+  it("gives the codes of a whole chain, open outermost first and close innermost first", () => {
+    expect(truecolor.red.bold.open).toBe(`${FMT.red[0]}${FMT.bold[0]}`);
+    expect(truecolor.red.bold.close).toBe(`${FMT.bold[1]}${FMT.red[1]}`);
+  });
+
+  it("matches what the style wraps text in", () => {
+    const style = truecolor.bgBlue.white.italic;
+    expect(style("text")).toBe(`${style.open}text${style.close}`);
+  });
+
+  it("gives the codes of color functions at the color level in use", () => {
+    expect(truecolor.rgb(255, 136, 0).open).toBe("\u001B[38;2;255;136;0m");
+    expect(ansi256.rgb(255, 136, 0).open).toBe("\u001B[38;5;214m");
+  });
+
+  it("gives empty codes when colors are disabled", () => {
+    expect(disabled.red.bold.open).toBe("");
+    expect(disabled.red.bold.close).toBe("");
+  });
+});
+
+describe("level", () => {
+  it.each([0, 1, 2, 3] as const)(
+    "gives the color level %i that the styles were created for",
+    (level) => {
+      expect(createColors(level).level).toBe(level);
+      expect(createColors(level).red.bold.level).toBe(level);
+    },
+  );
+
+  it("gives the detected level for the default styles", () => {
+    // The tests set FORCE_COLOR=3.
+    expect(red.level).toBe(3);
+  });
+});
+
+describe("strip", () => {
+  it("removes styles and colors", () => {
+    expect(strip(red.bold(`a ${green("b")} c`))).toBe("a b c");
+    expect(strip(createColors(3).rgb(1, 2, 3).bgHex("#fff")("x"))).toBe("x");
+  });
+
+  it("leaves plain text alone", () => {
+    expect(strip("plain text")).toBe("plain text");
   });
 });
