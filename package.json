@@ -35,6 +35,7 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
+    "./gradients": "./dist/gradients.js",
     "./utils": "./dist/utils.js",
     "./package.json": "./package.json"
   },
