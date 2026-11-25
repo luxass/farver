@@ -7,8 +7,13 @@ import { FIXED_STYLES, getColorFunctions } from "./styles";
 /**
  * Styles text. Numbers and booleans are converted to text. `undefined`, `null`, and `''` give `''`,
  * except for `reset()`, which gives the reset code.
+ *
+ * It also works as a template tag: ``red`Error: ${file} not found` `` styles the whole text.
  */
-export type Farve = (text?: string | boolean | number | null) => string;
+export interface Farve {
+  (text?: string | boolean | number | null): string;
+  (strings: TemplateStringsArray, ...values: unknown[]): string;
+}
 
 /**
  * The styles and colors that can be applied and chained, such as `red`, `bold`, or `rgb(255, 136, 0)`.
@@ -94,6 +99,22 @@ function toText(text: string | boolean | number): string {
   return typeof text === "string" ? text : `${text}`;
 }
 
+function isTemplateStrings(input: unknown): input is TemplateStringsArray {
+  return Array.isArray(input) && "raw" in input;
+}
+
+/**
+ * Joins a tagged template the way an untagged template literal would. Escapes such as `\\n` are
+ * applied. A string part with an invalid escape has no cooked value, so its raw text is used.
+ */
+function joinTemplate(strings: TemplateStringsArray, values: readonly unknown[]): string {
+  let text = strings[0] ?? strings.raw[0] ?? "";
+  for (let index = 0; index < values.length; index++) {
+    text += String(values[index]) + (strings[index + 1] ?? strings.raw[index + 1] ?? "");
+  }
+  return text;
+}
+
 /**
  * Wraps text in one style. A close code of the same style inside the text would end the style early,
  * so it's replaced with the open code. Styles are also closed before each line break and reopened after it.
@@ -141,7 +162,11 @@ function createStyle(
   const emptyResult =
     enabled && chain.length === 1 && chain[0] === fixedStyles.reset ? openAll : "";
 
-  const style = (text: Parameters<Farve>[0]): string => {
+  const style = (
+    input?: string | boolean | number | null | TemplateStringsArray,
+    ...values: unknown[]
+  ): string => {
+    const text = isTemplateStrings(input) ? joinTemplate(input, values) : input;
     if (text === undefined || text === null || text === "") return emptyResult;
     let result = toText(text);
     if (!enabled) return result;
