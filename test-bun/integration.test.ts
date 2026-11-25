@@ -2,6 +2,12 @@ import { describe, expect, it } from "bun:test";
 
 import { escapeAnsi } from "../test/shared.ts";
 
+// The default exports detect the color level when they're imported. Each test imports them dynamically,
+// so setting FORCE_COLOR here fixes the level to truecolor in a terminal, a pipe, and CI.
+// NO_COLOR would win over FORCE_COLOR, so clear it in case it's set in your shell.
+process.env.FORCE_COLOR = "3";
+delete process.env.NO_COLOR;
+
 describe("Bun Integration Tests", () => {
   it("should import main module correctly", async () => {
     const farver = await import("../src/index.ts");
