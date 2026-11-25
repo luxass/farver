@@ -22,6 +22,6 @@
     "verbatimModuleSyntax": true,
     "skipLibCheck": true
   },
-  "include": ["src", "playground.ts"],
+  "include": ["src", "bench", "playground.ts"],
   "exclude": ["node_modules", "dist"]
 }

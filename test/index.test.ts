@@ -338,3 +338,44 @@ describe("should downscale true colors", () => {
     });
   });
 });
+
+// Most chains are wrapped in one step. When an inner style's code is an outer style's close code,
+// the chain is applied style by style instead, so `a.b(text)` still equals `a(b(text))`.
+describe("chains whose styles share a close code", () => {
+  const truecolor = createColors(3);
+  const ansi16 = createColors(SPACE_16_COLORS);
+
+  it("gives the same result as nested calls", () => {
+    expect(truecolor.dim.bold(`a ${truecolor.bold("b")} c`)).toBe(
+      truecolor.dim(truecolor.bold(`a ${truecolor.bold("b")} c`)),
+    );
+    expect(truecolor.red.green(`a ${truecolor.green("b")} c`)).toBe(
+      truecolor.red(truecolor.green(`a ${truecolor.green("b")} c`)),
+    );
+  });
+
+  it.each([
+    [
+      "dim.bold",
+      () => truecolor.dim.bold(`a ${truecolor.bold("b")} c`),
+      "\u001B[2m\u001B[1ma \u001B[1mb\u001B[1m c\u001B[2m\u001B[22m",
+    ],
+    [
+      "red.green",
+      () => truecolor.red.green(`a ${truecolor.green("b")} c`),
+      "\u001B[31m\u001B[32ma \u001B[32mb\u001B[32m c\u001B[31m\u001B[39m",
+    ],
+    [
+      "bgRed.bgGray.white with a line break",
+      () => truecolor.bgRed.bgGray.white("x\ny"),
+      "\u001B[41m\u001B[100m\u001B[37mx\u001B[39m\u001B[41m\u001B[49m\n\u001B[41m\u001B[100m\u001B[37my\u001B[39m\u001B[41m\u001B[49m",
+    ],
+    [
+      "yellow.bgRed.bgGray.fg(196) at 16 colors",
+      () => ansi16.yellow.bgRed.bgGray.fg(196)("text"),
+      "\u001B[33m\u001B[41m\u001B[100m\u001B[91mtext\u001B[33m\u001B[41m\u001B[49m\u001B[39m",
+    ],
+  ])("%s", (_name, render, expected) => {
+    expect(escapeAnsi(render())).toBe(escapeAnsi(expected));
+  });
+});

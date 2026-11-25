@@ -26,7 +26,8 @@ export default defineConfig({
   },
   overrides: [
     {
-      files: ["playground.ts"],
+      // Scripts that print their results.
+      files: ["playground.ts", "bench/**/*"],
       rules: {
         "no-console": "off",
       },
