@@ -6,11 +6,11 @@ strictDepBuilds: true
 blockExoticSubdeps: true
 
 minimumReleaseAgeExclude:
-  - termenv@1.0.5
+  - termenv@1.1.0
 
 catalogs:
   runtime:
-    termenv: 1.0.5
+    termenv: 1.1.0
 
   dev:
     oxfmt: 0.72.0

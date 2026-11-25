@@ -184,8 +184,8 @@ catalogs:
       version: 7.0.2
   runtime:
     termenv:
-      specifier: 1.0.5
-      version: 1.0.5
+      specifier: 1.1.0
+      version: 1.1.0
   testing:
     '@vitest/browser-playwright':
       specifier: 5.0.3
@@ -213,7 +213,7 @@ importers:
     dependencies:
       termenv:
         specifier: catalog:runtime
-        version: 1.0.5
+        version: 1.1.0
     devDependencies:
       '@types/bun':
         specifier: catalog:types
@@ -1392,8 +1392,8 @@ packages:
   std-env@4.3.0:
     resolution: {integrity: sha512-OtU/EgQ1kIm5KwqQpBC6ZEMXrZRui11w8zgfTWp8cdO9B8OaPsbA8bTHO2P+HNo1VlUTGMVBwPhydu6poeXiag==}
 
-  termenv@1.0.5:
-    resolution: {integrity: sha512-zqdFYhoad5fi+7RmO16ZRdafz90Fhu2/z+mf9gieWEC9Enxz8OGQSuwHUWP8t4qyrj7T1KS5DLPRudqnEBR9Og==}
+  termenv@1.1.0:
+    resolution: {integrity: sha512-K7G2mp0AcDGpewfJJRkZeKfWVbBbUnvsKHvgCvbzRivYPboSrmEaUbISvqeBS4ecHhMk+lJ0dPtDFgpS639nrQ==}
     engines: {node: '>=24.11.0'}
 
   tinybench@6.2.2:
@@ -2381,7 +2381,7 @@ snapshots:
 
   std-env@4.3.0: {}
 
-  termenv@1.0.5: {}
+  termenv@1.1.0: {}
 
   tinybench@6.2.2: {}
 
