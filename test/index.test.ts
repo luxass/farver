@@ -89,9 +89,40 @@ it("handle numbers", () => {
   expect(red(Number.NEGATIVE_INFINITY)).toBe(getAnsi("-Infinity", "red"));
 });
 
-it("handle nullish values", () => {
-  expect(bgGreen(undefined)).toBe(`${FMT.bgGreen[0]}undefined${FMT.bgGreen[1]}`);
-  expect(bgBlue(null)).toBe(`${FMT.bgBlue[0]}null${FMT.bgBlue[1]}`);
+describe("empty input", () => {
+  const truecolor = createColors(3);
+  const disabled = createColors(SPACE_MONO);
+
+  it.each([
+    ["no argument", () => red()],
+    // oxlint-disable-next-line unicorn/no-useless-undefined -- The test passes undefined on purpose.
+    ["undefined", () => bgGreen(undefined)],
+    ["null", () => bgBlue(null)],
+    ["an empty string", () => red("")],
+    ["a chain", () => truecolor.red.bold.underline(null)],
+    ["a color function", () => truecolor.hex("#ff8800")("")],
+    ["disabled colors", () => disabled.red(null)],
+  ])("gives an empty string for %s", (_name, render) => {
+    expect(render()).toBe("");
+  });
+
+  it("gives the reset code for reset() without text", () => {
+    expect(truecolor.reset()).toBe(FMT.reset[0]);
+    expect(truecolor.reset(null)).toBe(FMT.reset[0]);
+    expect(truecolor.reset("")).toBe(FMT.reset[0]);
+  });
+
+  it("gives nothing for reset() when colors are disabled", () => {
+    expect(disabled.reset()).toBe("");
+  });
+
+  it("still wraps text with reset", () => {
+    expect(truecolor.reset("text")).toBe(`${FMT.reset[0]}text${FMT.reset[1]}`);
+  });
+
+  it("gives an empty string for a chain that ends in reset", () => {
+    expect(truecolor.red.reset()).toBe("");
+  });
 });
 
 it("handle booleans", () => {
@@ -100,9 +131,8 @@ it("handle booleans", () => {
 });
 
 describe("handle non strings", () => {
+  // Falsy values that aren't empty input are real values, so they're styled.
   const cases = [
-    [undefined, "undefined"],
-    [null, "null"],
     [true, "true"],
     [false, "false"],
     [0, "0"],
